@@ -1,0 +1,14 @@
+c:\cordova\drugs\platforms\wp8\Bin\Debug\ApplicationIcon.png
+c:\cordova\drugs\platforms\wp8\Bin\Debug\Background.png
+c:\cordova\drugs\platforms\wp8\Bin\Debug\com.phonegap.drugstore.dll
+c:\cordova\drugs\platforms\wp8\Bin\Debug\com.phonegap.drugstore.pdb
+c:\cordova\drugs\platforms\wp8\Bin\Debug\AppManifest.xaml
+c:\cordova\drugs\platforms\wp8\Bin\Debug\Properties\WMAppManifest.xml
+c:\cordova\drugs\platforms\wp8\Bin\Debug\CordovaAppProj_Debug_AnyCPU.xap
+c:\cordova\drugs\platforms\wp8\obj\Debug\App.g.cs
+c:\cordova\drugs\platforms\wp8\obj\Debug\cordovalib\CordovaView.g.cs
+c:\cordova\drugs\platforms\wp8\obj\Debug\MainPage.g.cs
+c:\cordova\drugs\platforms\wp8\obj\Debug\com.phonegap.drugstore.g.resources
+c:\cordova\drugs\platforms\wp8\obj\Debug\com.phonegap.drugstore.dll
+c:\cordova\drugs\platforms\wp8\obj\Debug\com.phonegap.drugstore.pdb
+c:\cordova\drugs\platforms\wp8\obj\Debug\XapCacheFile.xml
