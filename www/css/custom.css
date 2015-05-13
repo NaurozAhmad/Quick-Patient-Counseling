@@ -9,8 +9,8 @@ nav {
 .attrib {
     font-weight: bold;
     display: inline-block;
-    width: 140px;
-    text-align: right;
+    width: 100px;
+    text-align: left;
     border-right: 1px solid #ddd;
     padding-right: 10px;
     margin-right: 10px;
@@ -78,7 +78,33 @@ nav {
     margin: 0;
 }
 .result-nav-btn {
-    font-size: 1rem !important;
-    height: 40px !important;
-    line-height: 40px !important;
+    line-height: 35px !important;
+}
+.title-name {
+    font-weight: normal !important;
+    font-size: 14px;
+}
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #546FFF;
+    box-shadow: 0px 1px 0px 0px #546FFF;
+}
+textarea.materialize-textarea:focus:not([readonly]) + label {
+    color: #546FFF;
+}
+i.left {
+    margin-right: 4px;
+}
+.drug-heading {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+nav .btn {
+    padding: 0px 1rem;
+}
+#drug-title {
+    text-align: center;
+    margin-top: 20%;
+    color: #546FFF;
+    font-size: 2.3rem;
+    line-height: 2.2rem;
 }
