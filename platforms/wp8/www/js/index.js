@@ -1,10 +1,15 @@
 /*jslint browser: true*/
-/*global $, jQuery, cordova, alert, Blob, FileReader, getPrev, Materialize*/
+/*global $, jQuery, cordova, alert, Blob, FileReader, getPrev, Materialize, update, firstUpdate*/
 
 var logOb = null,
+    userNotes = null,
+    userNotesObj = [],
     stuff = null,
+    newStuff = null,
+    oldStuff = null,
     obj = null,
     singleObject = null,
+    singleUserNote = null,
     searchByType = 1;
 
 //============================================ Mutual Functions =================================================
@@ -60,6 +65,10 @@ function readFile() {
 
         reader.onloadend = function () {
             var string = this.result;
+            if (string == "") {
+                $("#update-modal").openModal();
+                firstUpdate();
+            }
             obj = JSON.parse(string);
             $('#all-drugs-list').empty();
             putValue('#all-drugs-list', obj);
@@ -68,15 +77,50 @@ function readFile() {
     }, fail);
 }
 
+function readUserNotes() {
+    userNotes.file(function (file) {
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            var string = this.result;
+            alert("got from file: " + string);
+            userNotesObj = JSON.parse(string);
+        };
+        reader.readAsText(file);
+    }, fail);
+}
+
+function checkForUpdate() {
+    $.ajax({
+        url: "http://rphapps.com/admin/drugs-json.php",
+        method: "GET",
+        dataType: "json",
+    }).done(function (data) {
+        newStuff = data;
+        oldStuff = obj;
+        if (JSON.stringify(newStuff) === JSON.stringify(oldStuff)) {
+            Materialize.toast('Local database up to date.', 2000);
+        } else {
+            Materialize.toast('Update available.', 2000);
+        }
+    }).fail(function () {
+        alert("Failed to connect to server. Please check your connection.");
+        $('.loading').css('display', 'none');
+    });
+}
+
 function onDeviceReady() {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dir) {
-        alert(cordova.file.dataDirectory);
         dir.getFile("log.txt", {create: true}, function (file) {
             logOb = file;
             readFile();
+            setTimeout(checkForUpdate(), 5000);
+        });
+        dir.getFile("userNotes.txt", {create: true}, function (file) {
+            userNotes = file;
+            readUserNotes();
         });
     });
-    $('.tooltipped').tooltip({delay: 50});
 }
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -145,6 +189,13 @@ function startMainSearch() {
     }
 }
 
+function startSearch() {
+    var typed = $('#search-key').val();
+    if ($.trim(typed).length > 0) {
+        doSearch(typed, "#search-result");
+    }
+}
+
 $('#main-search').on('keyup', function () {
     startMainSearch();
 });
@@ -153,17 +204,21 @@ $('#search-key').on('keyup', function () {
     startSearch();
 });
 
-function startSearch() {
-    var typed = $('#search-key').val();
-    if ($.trim(typed).length > 0) {
-        doSearch(typed, "#search-result");
-    }
+function firstUpdate() {
+    $.ajax({
+        url: "http://rphapps.com/admin/drugs-json.php",
+        method: "GET"
+    }).done(function (data) {
+        stuff = data;
+        writeStuff(stuff);
+        $('.loading').css('display', 'none');
+    }).fail(function () {
+        alert("Failed to connect to server. Please check your connection.");
+        $('.loading').css('display', 'none');
+    });
 }
 
-$('#update-local').on('click', function (event) {
-    event.preventDefault();
-    $('#loading').css('display', 'block');
-
+function update() {
     $.ajax({
         url: "http://rphapps.com/admin/drugs-json.php",
         method: "GET"
@@ -171,12 +226,17 @@ $('#update-local').on('click', function (event) {
         stuff = data;
         writeStuff(stuff);
         readFile();
-        setTimeout(readFile(), 2000);
-        $('#loading').css('display', 'none');
+        $('.loading').css('display', 'none');
     }).fail(function () {
         alert("Failed to connect to server. Please check your connection.");
-        $('#loading').css('display', 'none');
+        $('.loading').css('display', 'none');
     });
+}
+
+$('#update-local').on('click', function (event) {
+    event.preventDefault();
+    $('.loading').css('display', 'block');
+    update();
 });
 
 $('.search-close').on('click', function () {
@@ -204,11 +264,26 @@ function onSingleDrug(id) {
         $('#s-caution').text(object.caution);
         $('#s-bbw').text(object.bbw);
         $('#s-key-points').text(object.key_points);
-        var i;
+        $('#s-drug-id').val(object.drug_id);
+        var i,
+            l;
         for (i = 0; i < object.keywords.length; i = i + 1) {
             jsonStuff = object.keywords[i];
             $('#keywords').append('<li onclick="descModal(\'' + jsonStuff.keyword_name + '\',\'' +
                 jsonStuff.keyword_desc + '\')">' + jsonStuff.keyword_name + '</li>');
+        }
+        if (userNotesObj.length) {
+            l = userNotesObj.length;
+            for (i = 0; i < l; i = i + 1) {
+                if (userNotesObj[i].id == object.drug_id) {
+                    singleUserNote = userNotesObj[i];
+                    $('#notes').val(singleUserNote.note);
+                    if (singleUserNote.note !== "") {
+                        $('#notes-label').addClass('active');
+                    }
+                    break;
+                }
+            }
         }
     });
 }
@@ -224,11 +299,8 @@ $('.back').on('click', function (event) {
     history.back();
 });
 
-$(document).on("pagebeforehide", "#drug-page", function () {
-    var notes = $('#notes').val();
-    if (notes !== "") {
-        alert("Saving notes: " + notes + " for drug: " + $("#s-drug-name").text());
-    }
+$(document).on("pageshow", "#home-page", function () {
+    $('#main-search').focus();
 });
 
 $('.by-name').on('click', function (event) {
@@ -278,7 +350,7 @@ $(document).on('pagehide', "#home-page", function () {
     pageID = false;
 });
 
-$(document).on('pageshow', "#all-drugs-list", function () {
+$(document).on('pageshow', "#all-drugs-page", function () {
     readFile();
 });
 
@@ -308,3 +380,55 @@ function onBackKey(event) {
 }
 
 document.addEventListener("backbutton", onBackKey, false);
+
+//=============================================== User Notes ==========================================================
+
+function writeNotes(str) {
+    if (!userNotes) {
+        alert("User notes file not created.");
+        return;
+    }
+    var log = str;
+    userNotes.createWriter(function (fileWriter) {
+        var blob = new Blob([log], {type: 'text/plain'});
+        fileWriter.write(blob);
+        Materialize.toast('User notes saved.', 2000);
+    }, fail);
+}
+
+$(document).on("pagebeforehide", "#drug-page", function () {
+    var notes = $('#notes').val(),
+        drugID = $('#s-drug-id').val(),
+        object = userNotesObj,
+        i,
+        l,
+        foundNote = false;
+
+    if (object.length) {
+        l = object.length;
+        for (i = 0; i < l; i = i + 1) {
+            if (object[i].id == drugID) {
+                singleUserNote = object[i];
+                if (singleUserNote.note !== notes) {
+                    singleUserNote.note = notes;
+                    writeNotes(JSON.stringify(object));
+                }
+                foundNote = true;
+                break;
+            }
+        }
+        if (foundNote === false) {
+            if (notes !== "") {
+                object.push({"id": drugID, "note": notes});
+                writeNotes(JSON.stringify(object));
+            }
+        }
+    } else {
+        object.push({"id": drugID, "note": notes});
+        writeNotes(JSON.stringify(object));
+    } 
+});
+
+$(document).on('pagehide', '#drug-page', function () {
+    $('#notes').val('');
+});

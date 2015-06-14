@@ -2,11 +2,14 @@
 /*global $, jQuery, cordova, alert, Blob, FileReader, getPrev, Materialize, update, firstUpdate*/
 
 var logOb = null,
+    userNotes = null,
+    userNotesObj = [],
     stuff = null,
     newStuff = null,
     oldStuff = null,
     obj = null,
     singleObject = null,
+    singleUserNote = null,
     searchByType = 1;
 
 //============================================ Mutual Functions =================================================
@@ -74,6 +77,19 @@ function readFile() {
     }, fail);
 }
 
+function readUserNotes() {
+    userNotes.file(function (file) {
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            var string = this.result;
+            alert("got from file: " + string);
+            userNotesObj = JSON.parse(string);
+        };
+        reader.readAsText(file);
+    }, fail);
+}
+
 function checkForUpdate() {
     $.ajax({
         url: "http://rphapps.com/admin/drugs-json.php",
@@ -99,6 +115,10 @@ function onDeviceReady() {
             logOb = file;
             readFile();
             setTimeout(checkForUpdate(), 5000);
+        });
+        dir.getFile("userNotes.txt", {create: true}, function (file) {
+            userNotes = file;
+            readUserNotes();
         });
     });
 }
@@ -244,11 +264,26 @@ function onSingleDrug(id) {
         $('#s-caution').text(object.caution);
         $('#s-bbw').text(object.bbw);
         $('#s-key-points').text(object.key_points);
-        var i;
+        $('#s-drug-id').val(object.drug_id);
+        var i,
+            l;
         for (i = 0; i < object.keywords.length; i = i + 1) {
             jsonStuff = object.keywords[i];
             $('#keywords').append('<li onclick="descModal(\'' + jsonStuff.keyword_name + '\',\'' +
                 jsonStuff.keyword_desc + '\')">' + jsonStuff.keyword_name + '</li>');
+        }
+        if (userNotesObj.length) {
+            l = userNotesObj.length;
+            for (i = 0; i < l; i = i + 1) {
+                if (userNotesObj[i].id == object.drug_id) {
+                    singleUserNote = userNotesObj[i];
+                    $('#notes').val(singleUserNote.note);
+                    if (singleUserNote.note !== "") {
+                        $('#notes-label').addClass('active');
+                    }
+                    break;
+                }
+            }
         }
     });
 }
@@ -262,13 +297,6 @@ function descModal(name, description) {
 $('.back').on('click', function (event) {
     event.preventDefault();
     history.back();
-});
-
-$(document).on("pagebeforehide", "#drug-page", function () {
-    var notes = $('#notes').val();
-    if (notes !== "") {
-        alert("Saving notes: " + notes + " for drug: " + $("#s-drug-name").text());
-    }
 });
 
 $(document).on("pageshow", "#home-page", function () {
@@ -352,3 +380,55 @@ function onBackKey(event) {
 }
 
 document.addEventListener("backbutton", onBackKey, false);
+
+//=============================================== User Notes ==========================================================
+
+function writeNotes(str) {
+    if (!userNotes) {
+        alert("User notes file not created.");
+        return;
+    }
+    var log = str;
+    userNotes.createWriter(function (fileWriter) {
+        var blob = new Blob([log], {type: 'text/plain'});
+        fileWriter.write(blob);
+        Materialize.toast('User notes saved.', 2000);
+    }, fail);
+}
+
+$(document).on("pagebeforehide", "#drug-page", function () {
+    var notes = $('#notes').val(),
+        drugID = $('#s-drug-id').val(),
+        object = userNotesObj,
+        i,
+        l,
+        foundNote = false;
+
+    if (object.length) {
+        l = object.length;
+        for (i = 0; i < l; i = i + 1) {
+            if (object[i].id == drugID) {
+                singleUserNote = object[i];
+                if (singleUserNote.note !== notes) {
+                    singleUserNote.note = notes;
+                    writeNotes(JSON.stringify(object));
+                }
+                foundNote = true;
+                break;
+            }
+        }
+        if (foundNote === false) {
+            if (notes !== "") {
+                object.push({"id": drugID, "note": notes});
+                writeNotes(JSON.stringify(object));
+            }
+        }
+    } else {
+        object.push({"id": drugID, "note": notes});
+        writeNotes(JSON.stringify(object));
+    } 
+});
+
+$(document).on('pagehide', '#drug-page', function () {
+    $('#notes').val('');
+});

@@ -35,7 +35,7 @@
             <div class="nav-wrapper">
                 <form>
                     <div class="input-field">
-                        <input data-role="none" class="search search-key" id="main-search" type="search" autofocus>
+                        <input data-role="none" class="search search-key" id="main-search" type="search">
                         <label for="search">
                             <i style="display: inline-block" class="mdi-action-search"></i>
                         </label>
@@ -95,7 +95,7 @@
         </nav>
         <div class="container">
             <h3 class="logo-heading">Quick Patient Counseling</h3>
-            <div id="loading" style="width:100%; display: none;" align="center">
+            <div class="loading" style="width:100%; display: none;" align="center">
                 <img style="width: 40px; height: auto;" src="img/loading.GIF">
             </div>
             <button id="update-local" class="waves-effect waves-light btn">Update</button>
@@ -181,6 +181,7 @@
                 <li class="collection-item">
                     <span style="font-weight: bold; font-size: 1.4rem;">
                         <span id="s-drug-brand"></span>
+                        <input type="hidden" id="s-drug-id">
                         <span id="s-drug-name" class="title-name"></span>
                     </span>
                 </li>
@@ -203,18 +204,37 @@
                 <h5 class="drug-heading">User Notes</h5>
                 <div class="input-field">
                     <textarea id="notes" class="materialize-textarea" data-role="none" cols="30" rows="10"></textarea>
-                    <label for="notes">Make your notes</label>
+                    <label id="notes-label" for="notes">Make your notes</label>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- =================================================== Description Modal ======================================= -->
+    <!-- =================================================== Modals ======================================= -->
 
     <div id="desc-modal" class="modal">
         <div class="modal-content">
             <h4 id="modal-heading"></h4>
             <p id="modal-desc"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+        </div>
+    </div>
+
+    <div id="update-modal" class="modal">
+        <div class="modal-content">
+            <div class="loading" style="width:100%; display: block;" align="center">
+                <img style="width: 40px; height: auto;" src="img/loading.GIF">
+            </div>
+            <p>Downloading local database for the first time.</p>
+        </div>
+    </div>
+
+    <div id="update-comp-modal" class="modal">
+        <div class="modal-content">
+            <div style="width:100%; display: block;" align="center">
+            <p>Local database updated.</p>
         </div>
         <div class="modal-footer">
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>

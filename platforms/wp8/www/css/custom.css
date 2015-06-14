@@ -102,7 +102,6 @@ i.left {
 }
 #drug-title {
     text-align: center;
-    margin-top: 35%;
     color: #546FFF;
     font-size: 2.3rem;
     line-height: 2.2rem;
@@ -161,4 +160,16 @@ i.left {
     background-color: #546FFF;
     color: #FFF;
     margin: 0 4px;
+}
+
+@media all and (orientation: landscape) {
+    #drug-title {
+        margin-top: 125px;
+    }
+}
+
+@media all and (orientation: portrait) {
+    #drug-title {
+        margin-top: 35%;
+    }
 }
