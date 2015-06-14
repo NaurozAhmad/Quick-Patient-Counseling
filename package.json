@@ -1,0 +1,23 @@
+{
+  "name": "quickpatientcounseling",
+  "version": "0.1.0",
+  "description": "A library of medicinal drugs",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaurozAhmad/Quick-Patient-Counseling.git"
+  },
+  "author": "Senho IT Solutions",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NaurozAhmad/Quick-Patient-Counseling/issues"
+  },
+  "homepage": "https://github.com/NaurozAhmad/Quick-Patient-Counseling#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-exec": "^0.4.6",
+    "grunt-livereload": "^0.1.3"
+  }
+}

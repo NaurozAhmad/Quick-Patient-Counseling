@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.phonegap.drugstore" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <feature name="File">
+        <param name="wp-package" value="File" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="wp-package" value="FileTransfer" />
+    </feature>
     <name>Drug Store</name>
     <description>
         Drug Info app made in Cordova
@@ -21,8 +27,9 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-minSdkVersion" value="10" />
     <preference name="android-installLocation" value="auto" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
