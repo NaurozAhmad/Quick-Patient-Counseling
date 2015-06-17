@@ -66,7 +66,6 @@ nav .nav-wrapper i {
 }
 #browse {
     font-size: 10px;
-    width: auto;
     padding: 6px 6px;
     left: 5px;
     top: 5px;
@@ -217,4 +216,8 @@ i.left {
 }
 .switch label input[type="checkbox"]:checked + .lever::after {
     background-color: #546FFF;
+}
+#main-stuff .btn-floating {
+    width: 42px;
+    height: 42px;
 }

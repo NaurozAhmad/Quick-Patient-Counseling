@@ -342,7 +342,15 @@ $('#notes-save').on('click', function () {
         writeNotes(JSON.stringify(object));
         $('#notes-modal').closeModal();
     }
-    $('#s-notes').text(notes);
+    if(notes !== "") {
+        $('#s-notes').text(notes);
+        $('.note-new').css('display', 'none');
+        $('.note-edit').css('display', 'block');
+    } else {
+        $('#s-notes').text('No notes yet.');
+        $('.note-new').css('display', 'block');
+        $('.note-edit').css('display', 'none');
+    }
 
 });
 
@@ -364,7 +372,7 @@ $(document).on('touchend', '.overlay', function (event) {
     $(this).siblings('.popup').css('display', 'none');
 });
 
-$('#add-notes').on('click', function () {
+$('.add-notes').on('click', function () {
     $('#notes-modal').openModal();
 });
 
@@ -459,7 +467,7 @@ $('#search-type-check').change(function () {
         $('.s-by-brand').removeClass('chosen');
         searchByType = 1;
         $('#search-key').focus();
-        startMainSearch();
+        startSearch();
     } else {
 
     //By Brand
@@ -467,6 +475,6 @@ $('#search-type-check').change(function () {
         $('.s-by-name').removeClass('chosen');
         searchByType = 2;
         $('#search-key').focus();
-        startMainSearch();
+        startSearch();
     }
 });
