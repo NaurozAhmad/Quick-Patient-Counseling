@@ -66,12 +66,15 @@ function readFile() {
         reader.onloadend = function () {
             var string = this.result;
             if (string == "") {
-                $("#update-modal").openModal();
-                firstUpdate();
+                // $("#update-modal").openModal();
+                // firstUpdate();
+                $('#all-drugs-list').empty();
+                $('#all-drugs-list').append('<li>No drugs yet. Please update.</li>');
+            } else {
+                obj = JSON.parse(string);
+                $('#all-drugs-list').empty();
+                putValue('#all-drugs-list', obj);
             }
-            obj = JSON.parse(string);
-            $('#all-drugs-list').empty();
-            putValue('#all-drugs-list', obj);
         };
         reader.readAsText(file);
     }, fail);
@@ -83,7 +86,6 @@ function readUserNotes() {
 
         reader.onloadend = function () {
             var string = this.result;
-            alert("got from file: " + string);
             userNotesObj = JSON.parse(string);
         };
         reader.readAsText(file);
@@ -105,7 +107,6 @@ function checkForUpdate() {
         }
     }).fail(function () {
         alert("Failed to connect to server. Please check your connection.");
-        $('.loading').css('display', 'none');
     });
 }
 
@@ -121,6 +122,8 @@ function onDeviceReady() {
             readUserNotes();
         });
     });
+    $('.tooltipped').tooltip({delay: 50});
+
 }
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -141,68 +144,6 @@ function writeStuff(str) {
 
 //================================================= App functionality ================================================
 
-function findByName(searchKey) {
-    var deferred = $.Deferred(),
-        object = obj,
-        results = object.filter(function (element) {
-            var drugName = element.drug_name;
-            return drugName.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
-        });
-    deferred.resolve(results);
-    return deferred.promise();
-}
-
-function findByBrand(searchKey) {
-    var deferred = $.Deferred(),
-        object = obj,
-        results = object.filter(function (element) {
-            var drugBrand = element.drug_brand;
-            return drugBrand.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
-        });
-    deferred.resolve(results);
-    return deferred.promise();
-}
-
-function doSearch(typed, container) {
-    if (searchByType === 1) {
-        findByName(typed).done(function (object) {
-            $(container).empty();
-            putValue(container, object);
-
-        });
-    } else if (searchByType === 2) {
-        findByBrand(typed).done(function (object) {
-            $(container).empty();
-            putValue(container, object);
-
-        });
-    }
-}
-
-function startMainSearch() {
-    var typed = $('#main-search').val();
-    if ($.trim(typed).length > 0) {
-        $('#main-stuff').css('display', 'none');
-        $('#search-nav').removeClass('main-search');
-        $('#div-search-result').css('display', 'block');
-        doSearch(typed, "#main-search-result");
-    }
-}
-
-function startSearch() {
-    var typed = $('#search-key').val();
-    if ($.trim(typed).length > 0) {
-        doSearch(typed, "#search-result");
-    }
-}
-
-$('#main-search').on('keyup', function () {
-    startMainSearch();
-});
-
-$('#search-key').on('keyup', function () {
-    startSearch();
-});
 
 function firstUpdate() {
     $.ajax({
@@ -269,29 +210,35 @@ function onSingleDrug(id) {
             l;
         for (i = 0; i < object.keywords.length; i = i + 1) {
             jsonStuff = object.keywords[i];
-            $('#keywords').append('<li onclick="descModal(\'' + jsonStuff.keyword_name + '\',\'' +
-                jsonStuff.keyword_desc + '\')">' + jsonStuff.keyword_name + '</li>');
+            $('#keywords').append('<li class="popup-trigger"><span class="popup">'
+                + jsonStuff.keyword_desc + '</span>' + jsonStuff.keyword_name
+                + '<div class="overlay"></div></li>');
         }
+
         if (userNotesObj.length) {
             l = userNotesObj.length;
             for (i = 0; i < l; i = i + 1) {
                 if (userNotesObj[i].id == object.drug_id) {
                     singleUserNote = userNotesObj[i];
-                    $('#notes').val(singleUserNote.note);
                     if (singleUserNote.note !== "") {
-                        $('#notes-label').addClass('active');
+                        $('#s-notes').text(singleUserNote.note);
+                        $('#notes').val(singleUserNote.note);
+                        $('.note-new').css('display', 'none');
+                        $('.note-edit').css('display', 'block');
+                    } else {
+                        $('#s-notes').text("No notes yet.");
+                        $('.note-new').css('display', 'block');
+                        $('.note-edit').css('display', 'none');
                     }
                     break;
+                } else {
+                    $('#s-notes').text('No notes yet.');
+                    $('.note-new').css('display', 'block');
+                    $('.note-edit').css('display', 'none');
                 }
             }
         }
     });
-}
-
-function descModal(name, description) {
-    $('#modal-heading').text(name);
-    $('#modal-desc').text(description);
-    $('#desc-modal').openModal();
 }
 
 $('.back').on('click', function (event) {
@@ -301,42 +248,6 @@ $('.back').on('click', function (event) {
 
 $(document).on("pageshow", "#home-page", function () {
     $('#main-search').focus();
-});
-
-$('.by-name').on('click', function (event) {
-    event.preventDefault();
-    $('.by-name').addClass('chosen');
-    $('.by-brand').removeClass('chosen');
-    searchByType = 1;
-    $('#main-search').focus();
-    startMainSearch();
-});
-
-$('.by-brand').on('click', function (event) {
-    event.preventDefault();
-    $('.by-brand').addClass('chosen');
-    $('.by-name').removeClass('chosen');
-    searchByType = 2;
-    $('#main-search').focus();
-    startMainSearch();
-});
-
-$('.s-by-name').on('click', function (event) {
-    event.preventDefault();
-    $('.s-by-name').addClass('chosen');
-    $('.s-by-brand').removeClass('chosen');
-    searchByType = 1;
-    $('#search-key').focus();
-    startSearch();
-});
-
-$('.s-by-brand').on('click', function (event) {
-    event.preventDefault();
-    $('.s-by-brand').addClass('chosen');
-    $('.s-by-name').removeClass('chosen');
-    searchByType = 2;
-    $('#search-key').focus();
-    startSearch();
 });
 
 var pageID = false;
@@ -352,6 +263,7 @@ $(document).on('pagehide', "#home-page", function () {
 
 $(document).on('pageshow', "#all-drugs-page", function () {
     readFile();
+
 });
 
 function onBackKey(event) {
@@ -396,7 +308,7 @@ function writeNotes(str) {
     }, fail);
 }
 
-$(document).on("pagebeforehide", "#drug-page", function () {
+$('#notes-save').on('click', function () {
     var notes = $('#notes').val(),
         drugID = $('#s-drug-id').val(),
         object = userNotesObj,
@@ -414,6 +326,7 @@ $(document).on("pagebeforehide", "#drug-page", function () {
                     writeNotes(JSON.stringify(object));
                 }
                 foundNote = true;
+                $('#notes-modal').closeModal();
                 break;
             }
         }
@@ -421,14 +334,139 @@ $(document).on("pagebeforehide", "#drug-page", function () {
             if (notes !== "") {
                 object.push({"id": drugID, "note": notes});
                 writeNotes(JSON.stringify(object));
+                $('#notes-modal').closeModal();
             }
         }
     } else {
         object.push({"id": drugID, "note": notes});
         writeNotes(JSON.stringify(object));
-    } 
+        $('#notes-modal').closeModal();
+    }
+    $('#s-notes').text(notes);
+
+});
+
+$('#notes-cancel').on('click', function () {
+    $('#notes').val('');
 });
 
 $(document).on('pagehide', '#drug-page', function () {
     $('#notes').val('');
+});
+
+$(document).on('touchstart', '.overlay', function (event) {
+    event.preventDefault();
+    $(this).siblings('.popup').css('display', 'inline-block');
+});
+
+$(document).on('touchend', '.overlay', function (event) {
+    event.preventDefault();
+    $(this).siblings('.popup').css('display', 'none');
+});
+
+$('#add-notes').on('click', function () {
+    $('#notes-modal').openModal();
+});
+
+// =================================================== Searching =================================================
+
+function findByName(searchKey) {
+    var deferred = $.Deferred(),
+        object = obj,
+        results = object.filter(function (element) {
+            var drugName = element.drug_name;
+            return drugName.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+        });
+    deferred.resolve(results);
+    return deferred.promise();
+}
+
+function findByBrand(searchKey) {
+    var deferred = $.Deferred(),
+        object = obj,
+        results = object.filter(function (element) {
+            var drugBrand = element.drug_brand;
+            return drugBrand.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+        });
+    deferred.resolve(results);
+    return deferred.promise();
+}
+
+function doSearch(typed, container) {
+    if (searchByType === 1) {
+        findByName(typed).done(function (object) {
+            $(container).empty();
+            putValue(container, object);
+
+        });
+    } else if (searchByType === 2) {
+        findByBrand(typed).done(function (object) {
+            $(container).empty();
+            putValue(container, object);
+
+        });
+    }
+}
+
+$('#main-search').on('keyup', function () {
+    startMainSearch();
+});
+
+$('#search-key').on('keyup', function () {
+    startSearch();
+});
+
+function startMainSearch() {
+    var typed = $('#main-search').val();
+    if ($.trim(typed).length > 0) {
+        $('#main-stuff').css('display', 'none');
+        $('#search-nav').removeClass('main-search');
+        $('#div-search-result').css('display', 'block');
+        doSearch(typed, "#main-search-result");
+    }
+}
+
+function startSearch() {
+    var typed = $('#search-key').val();
+    if ($.trim(typed).length > 0) {
+        doSearch(typed, "#search-result");
+    }
+}
+
+$('#main-type-check').change(function () {
+    //By Name/Generic
+    if (this.checked) {
+        $('.by-name').addClass('chosen');
+        $('.by-brand').removeClass('chosen');
+        searchByType = 1;
+        $('#main-search').focus();
+        startMainSearch();
+    } else {
+
+    //By Brand
+        $('.by-brand').addClass('chosen');
+        $('.by-name').removeClass('chosen');
+        searchByType = 2;
+        $('#main-search').focus();
+        startMainSearch();
+    }
+});
+
+$('#search-type-check').change(function () {
+    //By Name/Generic
+    if (this.checked) {
+        $('.s-by-name').addClass('chosen');
+        $('.s-by-brand').removeClass('chosen');
+        searchByType = 1;
+        $('#search-key').focus();
+        startMainSearch();
+    } else {
+
+    //By Brand
+        $('.s-by-brand').addClass('chosen');
+        $('.s-by-name').removeClass('chosen');
+        searchByType = 2;
+        $('#search-key').focus();
+        startMainSearch();
+    }
 });

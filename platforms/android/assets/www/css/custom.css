@@ -1,3 +1,7 @@
+#home-page {
+    background: url(../img/back.png);
+    background-size: 60px 60px;
+}
 nav {
     background-color: #546FFF;
     height: auto;
@@ -23,7 +27,7 @@ nav .ui-link {
 nav .nav-wrapper i {
     font-size: 1.2rem;
 }
-.btn {
+.btn, .btn-floating {
     background-color: #546FFF;
     color: #FFF;
     font-size: 10px;
@@ -55,7 +59,7 @@ nav .nav-wrapper i {
 }
 #update {
     width: auto;
-    padding: 0 14px;
+    padding: 0 6px;
     right: 5px;
     top: 5px;
     position: absolute
@@ -63,7 +67,7 @@ nav .nav-wrapper i {
 #browse {
     font-size: 10px;
     width: auto;
-    padding: 0 14px;
+    padding: 6px 6px;
     left: 5px;
     top: 5px;
     position: absolute
@@ -113,6 +117,9 @@ i.left {
 .search-type.right {
     float: right;
 }
+.left {
+    float: left;
+}
 .main-search {
     margin-top: 26px;
 }
@@ -133,9 +140,9 @@ i.left {
 .search-type:focus {
     background-color: rgb(84, 111, 255);
 }
-.search-type.chosen {
-    background-color: rgb(84, 111, 255);
-    color: #FFF !important;
+.chosen {
+    color: #546FFF !important;
+    text-shadow: 1px 1px 1px;
 }
 .search-btn {
     margin-top: 6px;
@@ -172,4 +179,42 @@ i.left {
     #drug-title {
         margin-top: 35%;
     }
+}
+.popup-trigger {
+    position: relative;
+    z-index: 100;
+    padding: 4px;
+    display: inline-block;
+}
+.overlay {
+    z-index: 9999;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0);
+}
+.popup {
+    display: none;
+    min-width: 160px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background-color: #000;
+    color: #FFF;
+    position: absolute;
+    bottom: 60px;
+    background: #000;
+}
+.switch label .lever {
+    background-color: #ACB8F8;
+}
+.switch label .lever::after {
+    background-color: #546FFF;
+}
+.switch label input[type="checkbox"]:checked + .lever {
+    background-color: #ACB8F8;
+}
+.switch label input[type="checkbox"]:checked + .lever::after {
+    background-color: #546FFF;
 }

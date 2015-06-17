@@ -26,8 +26,11 @@
     <div data-role="page" id="home-page">
         <div id="main-stuff">
             <div>
-                <a data-transition="slide" href="#about" class="waves-effect waves-light btn" id="update">Info</a>
-                <a data-transition="slide" href="#all-drugs-page" class="waves-effect waves-light btn" id="browse">Browse All Drugs</a>
+                <a style="top: 5px; position: absolute; right: 5px;" data-transition="slide" href="#about" id="info-update" class="btn-floating waves-effect waves-light"><i class="mdi-action-info-outline"></i></a>
+                
+                <a data-transition="slide" href="#all-drugs-page" id="browse" class="btn-floating waves-effect waves-light">
+                    <img src="img/medical.png">
+                </a>
                 <h3 id="drug-title">Quick<br/>Patient Counseling</h3>
             </div>
         </div>
@@ -35,7 +38,7 @@
             <div class="nav-wrapper">
                 <form>
                     <div class="input-field">
-                        <input data-role="none" class="search search-key" id="main-search" type="search">
+                        <input data-role="none" class="search search-key" id="main-search" type="search" autofocus>
                         <label for="search">
                             <i style="display: inline-block" class="mdi-action-search"></i>
                         </label>
@@ -44,13 +47,15 @@
                 </form>
             </div>
         </nav>
-        <div class="search-btn">
-            <a data-transition="slide" class="by-brand waves-effect waves-light btn search-type">
-                Search by Brand
-            </a>
-            <a data-transition="slide" class="chosen by-name waves-effect waves-light btn search-type right">
-                Search by Generic
-            </a>
+        <div class="search-btn" align="center">
+            <div class="switch">
+                <label>
+                    <span class="by-brand chosen">By Brand</span>
+                    <input id="main-type-check" type="checkbox" data-role="none">
+                    <span class="lever"></span>
+                    <span class="by-name">By Generic</span>
+                </label>
+            </div>
         </div>
 
         <div id="div-search-result" style="display:none">
@@ -65,7 +70,7 @@
     <div data-role="page" id="all-drugs-page">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" href="#home-page" class="waves-effect waves-light btn btn-left">
+                <a data-transition="slide" data-direction="reverse" id="all-drugs-back" href="#home-page" class="waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Main
                 </a>
@@ -144,13 +149,15 @@
                 </form>
             </div>
         </nav>
-        <div class="search-btn">
-            <a data-transition="slide" class="s-by-brand waves-effect waves-light btn search-type">
-                Search by Brand
-            </a>
-            <a data-transition="slide" class="chosen s-by-name waves-effect waves-light btn search-type right">
-                Search by Generic
-            </a>
+        <div class="search-btn" align="center">
+            <div class="switch">
+                <label>
+                    <span class="s-by-brand chosen">By Brand</span>
+                    <input id="search-type-check" type="checkbox" data-role="none">
+                    <span class="lever"></span>
+                    <span class="s-by-name">By Generic</span>
+                </label>
+            </div>
         </div>
         <div>
             <ul class="collection" id="search-result">
@@ -195,30 +202,32 @@
             <div class="container">
                 <h5 class="drug-heading">Key Codes</h5>
                 <ul id="keywords">
-
                 </ul>
+                <p class="stuff-here" style="display: none">Hi there!</p>
                 <h5 class="drug-heading">Key Counseling Points</h5>
                 <p id="s-key-points">
 
                 </p>
                 <h5 class="drug-heading">User Notes</h5>
-                <div class="input-field">
-                    <textarea id="notes" class="materialize-textarea" data-role="none" cols="30" rows="10"></textarea>
-                    <label id="notes-label" for="notes">Make your notes</label>
-                </div>
+                <p id="s-notes"></p>
+                <a id="add-notes" class="note-new btn-floating waves-effect waves-light"><i class="mdi-content-add"></i></a>
+                <a id="add-notes" class="note-edit btn-floating waves-effect waves-light"><i class="mdi-editor-mode-edit"></i></a>
             </div>
         </div>
     </div>
 
     <!-- =================================================== Modals ======================================= -->
 
-    <div id="desc-modal" class="modal">
+    <div id="notes-modal" class="modal">
         <div class="modal-content">
-            <h4 id="modal-heading"></h4>
-            <p id="modal-desc"></p>
+            <h4 id="modal-heading">Make your notes</h4>
+            <div class="input-field">
+                <textarea id="notes" class="materialize-textarea" data-role="none" cols="30" rows="10"></textarea>
+            </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+            <a href="#!" id="notes-save" class=" modal-action waves-effect waves-green btn-flat">Save</a>
+            <a href="#!" id="notes-cancel" class=" modal-action modal-close waves-effect waves-green btn-flat left">Cancel</a>
         </div>
     </div>
 
@@ -234,13 +243,13 @@
     <div id="update-comp-modal" class="modal">
         <div class="modal-content">
             <div style="width:100%; display: block;" align="center">
-            <p>Local database updated.</p>
+                <p>Local database updated.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-        </div>
-    </div>
 
-  <script type="text/javascript" src="js/index.js"></script>
-</body>
-</html>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+    </html>
