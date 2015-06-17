@@ -10,7 +10,7 @@ var logOb = null,
     obj = null,
     singleObject = null,
     singleUserNote = null,
-    searchByType = 1;
+    searchByType = 2;
 
 //============================================ Mutual Functions =================================================
 
@@ -383,7 +383,7 @@ function findByName(searchKey) {
         object = obj,
         results = object.filter(function (element) {
             var drugName = element.drug_name;
-            return drugName.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            return drugName.toLowerCase().indexOf(searchKey.toLowerCase()) == 0;
         });
     deferred.resolve(results);
     return deferred.promise();
@@ -394,7 +394,7 @@ function findByBrand(searchKey) {
         object = obj,
         results = object.filter(function (element) {
             var drugBrand = element.drug_brand;
-            return drugBrand.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            return drugBrand.toLowerCase().indexOf(searchKey.toLowerCase()) == 0;
         });
     deferred.resolve(results);
     return deferred.promise();
@@ -404,14 +404,22 @@ function doSearch(typed, container) {
     if (searchByType === 1) {
         findByName(typed).done(function (object) {
             $(container).empty();
-            putValue(container, object);
-
+            if (object.length > 0) {
+                putValue(container, object);
+            } else {
+                $('#main-search-result').append('<li>No results found.</li>');
+                $('#search-result').append('<li>No results found.</li>');
+            }
         });
     } else if (searchByType === 2) {
         findByBrand(typed).done(function (object) {
             $(container).empty();
-            putValue(container, object);
-
+            if (object.length > 0) {
+                putValue(container, object);
+            } else {
+                $('#main-search-result').append('<li>No results found.</li>');
+                $('#search-result').append('<li>No results found.</li>');
+            }
         });
     }
 }
@@ -446,6 +454,8 @@ $('#main-type-check').change(function () {
     if (this.checked) {
         $('.by-name').addClass('chosen');
         $('.by-brand').removeClass('chosen');
+        $('.s-by-name').addClass('chosen');
+        $('.s-by-brand').removeClass('chosen');
         searchByType = 1;
         $('#main-search').focus();
         startMainSearch();
@@ -454,6 +464,8 @@ $('#main-type-check').change(function () {
     //By Brand
         $('.by-brand').addClass('chosen');
         $('.by-name').removeClass('chosen');
+        $('.s-by-brand').addClass('chosen');
+        $('.s-by-name').removeClass('chosen');
         searchByType = 2;
         $('#main-search').focus();
         startMainSearch();
@@ -463,6 +475,8 @@ $('#main-type-check').change(function () {
 $('#search-type-check').change(function () {
     //By Name/Generic
     if (this.checked) {
+        $('.by-name').addClass('chosen');
+        $('.by-brand').removeClass('chosen');
         $('.s-by-name').addClass('chosen');
         $('.s-by-brand').removeClass('chosen');
         searchByType = 1;
@@ -471,6 +485,8 @@ $('#search-type-check').change(function () {
     } else {
 
     //By Brand
+        $('.by-brand').addClass('chosen');
+        $('.by-name').removeClass('chosen');
         $('.s-by-brand').addClass('chosen');
         $('.s-by-name').removeClass('chosen');
         searchByType = 2;
