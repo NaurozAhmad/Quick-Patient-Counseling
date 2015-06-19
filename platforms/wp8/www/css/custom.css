@@ -1,4 +1,4 @@
-.ui-page {
+#home-page {
     background: url(../img/back.png);
     background-size: 60px 60px;
 }
@@ -66,7 +66,6 @@ nav .nav-wrapper i {
 }
 #browse {
     font-size: 10px;
-    width: auto;
     padding: 6px 6px;
     left: 5px;
     top: 5px;
@@ -145,8 +144,8 @@ i.left {
     text-shadow: 1px 1px 1px;
 }
 .search-btn {
-    margin-top: 6px;
-    margin-bottom: 6px;
+    margin-top: 12px;
+    margin-bottom: 12px;
     width: 100%;
 }
 #s-drug-brand {
@@ -217,4 +216,17 @@ i.left {
 }
 .switch label input[type="checkbox"]:checked + .lever::after {
     background-color: #546FFF;
+}
+#main-stuff .btn-floating {
+    width: 42px;
+    height: 42px;
+}
+.search-btn span {
+    font-size: 18px;
+}
+.stripy {
+    background-color: #EBF3FC !important;
+}
+#drug-page .collection .collection-item {
+    padding: 5px 20px;
 }

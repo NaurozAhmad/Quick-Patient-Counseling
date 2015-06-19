@@ -6,7 +6,7 @@
     <feature name="FileTransfer">
         <param name="wp-package" value="FileTransfer" />
     </feature>
-    <name>Drug Store</name>
+    <name>Quick Patient Counseling</name>
     <description>
         Drug Info app made in Cordova
     </description>

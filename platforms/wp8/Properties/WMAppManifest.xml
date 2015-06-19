@@ -4,7 +4,7 @@
     <Languages xmlns="">
         <Language code="en-US" />
     </Languages>
-    <App Author="Drug Store author" BitsPerPixel="32" Description="Apache Cordova for Windows Phone" Genre="apps.normal" ProductID="{277f0a80-ed19-11e4-9f59-472521c5cc84}" Publisher="Drug Store" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="Drug Store" Version="1.0.0" xmlns="">
+    <App Author="Quick Patient Counseling Author" BitsPerPixel="32" Description="Apache Cordova for Windows Phone" Genre="apps.normal" ProductID="{5c0dc830-1650-11e5-a737-fb9943358825}" Publisher="Quick Patient Counseling Publisher" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="Quick Patient Counseling" Version="1.0.0" xmlns="">
         <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
         <Capabilities>
             <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
@@ -14,7 +14,7 @@
             <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
         </Tasks>
         <Tokens>
-            <PrimaryToken TaskName="_default" TokenID="Drug StoreToken">
+            <PrimaryToken TaskName="_default" TokenID="Quick Patient Counseling">
                 <TemplateFlip>
                     <SmallImageURI IsRelative="true" IsResource="false">Background.png</SmallImageURI>
                     <Count>0</Count>

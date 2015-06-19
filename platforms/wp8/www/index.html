@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="assets/jquery-theme/no-shadow.css">
 <link rel="stylesheet" type="text/css" href="assets/materialize/css/materialize.min.css">
 <link rel="stylesheet" type="text/css" href="css/custom.css" />
-<title>Drug Store</title>
+<title>Quick Patient Counselingc</title>
 
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
@@ -26,10 +26,12 @@
     <div data-role="page" id="home-page">
         <div id="main-stuff">
             <div>
-                <a style="top: 5px; position: absolute; right: 5px;" data-transition="slide" href="#about" id="info-update" class="btn-floating waves-effect waves-light"><i class="mdi-action-info-outline"></i></a>
+                <a style="top: 5px; position: absolute; right: 5px;" data-transition="slide" href="#about" id="info-update" class="btn-floating waves-effect waves-light">
+                    <i style="padding-top: 3px;" class="mdi-action-info-outline"></i>
+                </a>
                 
-                <a data-transition="slide" href="#all-drugs-page" id="browse" class="btn-floating waves-effect waves-light">
-                    <img src="img/medical.png">
+                <a style="padding-top: 8px; padding-left: 11px;" data-transition="slide" href="#all-drugs-page" id="browse" class="btn-floating waves-effect waves-light">
+                    <img style="width: 20px" src="img/medical.png">
                 </a>
                 <h3 id="drug-title">Quick<br/>Patient Counseling</h3>
             </div>
@@ -38,7 +40,7 @@
             <div class="nav-wrapper">
                 <form>
                     <div class="input-field">
-                        <input data-role="none" class="search search-key" id="main-search" type="search" autofocus>
+                        <input onchange="searchMain()" data-role="none" class="search search-key" id="main-search" type="search" autofocus>
                         <label for="search">
                             <i style="display: inline-block" class="mdi-action-search"></i>
                         </label>
@@ -142,7 +144,7 @@
             <div class="nav-wrapper">
                 <form>
                     <div class="input-field">
-                        <input class="search search-key" id="search-key" type="search" autofocus data-role="none">
+                        <input onchange="searchSecond()" class="search search-key" id="search-key" type="search" autofocus data-role="none">
                         <label for="search"><i class="mdi-action-search"></i></label>
                         <i class="mdi-navigation-close search-result-close"></i>
                     </div>
@@ -175,7 +177,7 @@
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
-                <a data-transition="slide" class="waves-effect waves-light btn btn-right" href="#result-page">
+                <a data-transition="slide" class="waves-effect waves-light btn btn-right" id="drug-page-search" href="#result-page">
                     <i class="result-nav-btn left mdi-action-search"></i>
                     Search
                 </a>
@@ -192,25 +194,24 @@
                         <span id="s-drug-name" class="title-name"></span>
                     </span>
                 </li>
-                <li class="collection-item"><span class="attrib">Food</span><span id="s-food"></span></li>
+                <li class="collection-item stripy"><span class="attrib">Food</span><span id="s-food"></span></li>
                 <li class="collection-item"><span class="attrib">Sedation</span><span id="s-sedation"></span></li>
-                <li class="collection-item"><span class="attrib">Preg/Lact</span><span id="s-preg"></span></li>
+                <li class="collection-item stripy"><span class="attrib">Preg/Lact</span><span id="s-preg"></span></li>
                 <li class="collection-item"><span class="attrib">Maj.SEs</span><span id="s-maj"></span></li>
-                <li class="collection-item"><span class="attrib">Caution/Cont. Ind.</span><span id="s-caution"></span></li>
+                <li class="collection-item stripy"><span class="attrib">Caution/Cont. Ind.</span><span id="s-caution"></span></li>
                 <li class="collection-item"><span class="attrib">BBW</span><span id="s-bbw"></span></li>
             </ul>
             <div class="container">
-                <h5 class="drug-heading">Key Codes</h5>
+                <h5 class="drug-heading">Key Counseling Points</h5>
                 <ul id="keywords">
                 </ul>
-                <p class="stuff-here" style="display: none">Hi there!</p>
-                <h5 class="drug-heading">Key Counseling Points</h5>
                 <p id="s-key-points">
 
                 </p>
                 <h5 class="drug-heading">User Notes</h5>
                 <p id="s-notes"></p>
-                <a id="add-notes" class="btn-floating waves-effect waves-light"><i class="mdi-content-add"></i></a>
+                <a class="add-notes note-new btn-floating waves-effect waves-light"><i class="mdi-content-add"></i></a>
+                <a class="add-notes note-edit btn-floating waves-effect waves-light"><i class="mdi-editor-mode-edit"></i></a>
             </div>
         </div>
     </div>
@@ -218,10 +219,10 @@
     <!-- =================================================== Modals ======================================= -->
 
     <div id="notes-modal" class="modal">
-        <div class="modal-content">
-            <h4 id="modal-heading">Make your notes</h4>
+        <div class="modal-content" style="padding-bottom: 10px;">
+            <h5 id="modal-heading">Make your notes</h5>
             <div class="input-field">
-                <textarea id="notes" class="materialize-textarea" data-role="none" cols="30" rows="10"></textarea>
+                <textarea id="notes" class="materialize-textarea" data-role="none" cols="30" rows="10" style="padding-top: 10px; padding-bottom: 10px;"></textarea>
             </div>
         </div>
         <div class="modal-footer">

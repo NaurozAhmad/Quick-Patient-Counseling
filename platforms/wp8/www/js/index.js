@@ -10,7 +10,9 @@ var logOb = null,
     obj = null,
     singleObject = null,
     singleUserNote = null,
-    searchByType = 1;
+    searchByType = 2,
+    pSearch = $('#main-search'),
+    sSearch = $('#search-key');
 
 //============================================ Mutual Functions =================================================
 
@@ -115,7 +117,6 @@ function onDeviceReady() {
         dir.getFile("log.txt", {create: true}, function (file) {
             logOb = file;
             readFile();
-            setTimeout(checkForUpdate(), 5000);
         });
         dir.getFile("userNotes.txt", {create: true}, function (file) {
             userNotes = file;
@@ -125,7 +126,14 @@ function onDeviceReady() {
     $('.tooltipped').tooltip({delay: 50});
 
 }
-document.addEventListener('deviceready', onDeviceReady, false);
+
+$(document).ready(function () {
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    } else {
+        onDeviceReady();
+    }
+});
 
 function writeStuff(str) {
     if (!logOb) {
@@ -174,21 +182,26 @@ function update() {
     });
 }
 
-$('#update-local').on('click', function (event) {
+$('#update-local').on('touchend', function (event) {
     event.preventDefault();
     $('.loading').css('display', 'block');
     update();
 });
 
-$('.search-close').on('click', function () {
+$('.search-close').on('touchend', function () {
     $('#main-stuff').css('display', 'block');
     $('#search-nav').addClass('main-search');
     $('#div-search-result').css('display', 'none');
-    $('#main-search').val("");
+    pSearch.val("");
 });
 
-$('.search-result-close').on('click', function () {
-    history.back();
+$('.search-result-close').on('touchend', function () {
+    $.mobile.changePage('#all-drugs-page');
+});
+
+$('#drug-page-search').on('touchend', function () {
+    sSearch.val('');
+    $('#search-result').empty();
 });
 
 function onSingleDrug(id) {
@@ -223,41 +236,65 @@ function onSingleDrug(id) {
                     if (singleUserNote.note !== "") {
                         $('#s-notes').text(singleUserNote.note);
                         $('#notes').val(singleUserNote.note);
+                        $('.note-new').css('display', 'none');
+                        $('.note-edit').css('display', 'block');
                     } else {
                         $('#s-notes').text("No notes yet.");
+                        $('.note-new').css('display', 'block');
+                        $('.note-edit').css('display', 'none');
                     }
                     break;
                 } else {
                     $('#s-notes').text('No notes yet.');
+                    $('.note-new').css('display', 'block');
+                    $('.note-edit').css('display', 'none');
                 }
             }
         }
     });
 }
 
-$('.back').on('click', function (event) {
-    event.preventDefault();
-    history.back();
-});
-
-$(document).on("pageshow", "#home-page", function () {
-    $('#main-search').focus();
-});
-
 var pageID = false;
+var searchID = 0;
 var backPressed = 0;
+
 
 $(document).on('pageshow', "#home-page", function () {
     pageID = true;
+    searchID = 1;
 });
 
 $(document).on('pagehide', "#home-page", function () {
     pageID = false;
+    $('.back').attr('href', '#home-page');
+});
+
+$(document).on('pagehide', "#all-drugs-page", function () {
+    pageID = false;
+    $('.back').attr('href', '#all-drugs-page');
+});
+
+$(document).on('pageshow', "#result-page", function () {
+    searchID = 2;
+});
+
+$(document).on('pagehide', "#result-page", function () {
+    $('.back').attr('href', '#result-page');
 });
 
 $(document).on('pageshow', "#all-drugs-page", function () {
     readFile();
+});
 
+$(document).on('pagehide', "#all-drugs-page", function () {
+    pSearch.val('');
+    $('#main-search-result').empty();
+    sSearch.val('');
+    $('#search-result').empty();
+});
+
+$(document).on('pageshow', "#about", function () {
+    checkForUpdate();
 });
 
 function onBackKey(event) {
@@ -278,7 +315,7 @@ function onBackKey(event) {
             $('#main-stuff').css('display', 'block');
             $('#search-nav').addClass('main-search');
             $('#div-search-result').css('display', 'none');
-            $('#main-search').val("");
+            pSearch.val("");
         }
     } else {
         history.back();
@@ -302,7 +339,7 @@ function writeNotes(str) {
     }, fail);
 }
 
-$('#notes-save').on('click', function () {
+$('#notes-save').on('touchend', function () {
     var notes = $('#notes').val(),
         drugID = $('#s-drug-id').val(),
         object = userNotesObj,
@@ -336,11 +373,19 @@ $('#notes-save').on('click', function () {
         writeNotes(JSON.stringify(object));
         $('#notes-modal').closeModal();
     }
-    $('#s-notes').text(notes);
+    if (notes !== "") {
+        $('#s-notes').text(notes);
+        $('.note-new').css('display', 'none');
+        $('.note-edit').css('display', 'block');
+    } else {
+        $('#s-notes').text('No notes yet.');
+        $('.note-new').css('display', 'block');
+        $('.note-edit').css('display', 'none');
+    }
 
 });
 
-$('#notes-cancel').on('click', function () {
+$('#notes-cancel').on('touchend', function () {
     $('#notes').val('');
 });
 
@@ -358,8 +403,9 @@ $(document).on('touchend', '.overlay', function (event) {
     $(this).siblings('.popup').css('display', 'none');
 });
 
-$('#add-notes').on('click', function () {
+$('.add-notes').on('click', function () {
     $('#notes-modal').openModal();
+    $('#notes').focus();
 });
 
 // =================================================== Searching =================================================
@@ -369,7 +415,7 @@ function findByName(searchKey) {
         object = obj,
         results = object.filter(function (element) {
             var drugName = element.drug_name;
-            return drugName.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            return drugName.toLowerCase().indexOf(searchKey.toLowerCase()) == 0;
         });
     deferred.resolve(results);
     return deferred.promise();
@@ -380,7 +426,7 @@ function findByBrand(searchKey) {
         object = obj,
         results = object.filter(function (element) {
             var drugBrand = element.drug_brand;
-            return drugBrand.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            return drugBrand.toLowerCase().indexOf(searchKey.toLowerCase()) == 0;
         });
     deferred.resolve(results);
     return deferred.promise();
@@ -390,28 +436,55 @@ function doSearch(typed, container) {
     if (searchByType === 1) {
         findByName(typed).done(function (object) {
             $(container).empty();
-            putValue(container, object);
-
+            if (object.length > 0) {
+                putValue(container, object);
+            } else {
+                $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+                $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+            }
         });
     } else if (searchByType === 2) {
         findByBrand(typed).done(function (object) {
             $(container).empty();
-            putValue(container, object);
-
+            if (object.length > 0) {
+                putValue(container, object);
+            } else {
+                $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+                $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+            }
         });
     }
 }
 
-$('#main-search').on('keyup', function () {
+function searchMain() {
+    startMainSearch();
+}
+function searchSecond() {
+    startMainSearch();
+}
+
+//====================== Catch enter key event =====================
+$(document).on('keypress', function (e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        if (pSearch.is(':focus')) {
+            searchMain();
+        } else if (sSearch.is(':focus')) {
+            searchSecond();
+        }
+    }
+});
+
+pSearch.on('input', function () {
     startMainSearch();
 });
 
-$('#search-key').on('keyup', function () {
+sSearch.on('input', function () {
     startSearch();
 });
 
 function startMainSearch() {
-    var typed = $('#main-search').val();
+    var typed = pSearch.val();
     if ($.trim(typed).length > 0) {
         $('#main-stuff').css('display', 'none');
         $('#search-nav').removeClass('main-search');
@@ -421,7 +494,7 @@ function startMainSearch() {
 }
 
 function startSearch() {
-    var typed = $('#search-key').val();
+    var typed = sSearch.val();
     if ($.trim(typed).length > 0) {
         doSearch(typed, "#search-result");
     }
@@ -432,35 +505,47 @@ $('#main-type-check').change(function () {
     if (this.checked) {
         $('.by-name').addClass('chosen');
         $('.by-brand').removeClass('chosen');
+        $('.s-by-name').addClass('chosen');
+        $('.s-by-brand').removeClass('chosen');
         searchByType = 1;
-        $('#main-search').focus();
+        pSearch.focus();
         startMainSearch();
+        $('#search-type-check').prop('checked', true);
     } else {
 
     //By Brand
         $('.by-brand').addClass('chosen');
         $('.by-name').removeClass('chosen');
+        $('.s-by-brand').addClass('chosen');
+        $('.s-by-name').removeClass('chosen');
         searchByType = 2;
-        $('#main-search').focus();
+        pSearch.focus();
         startMainSearch();
+        $('#search-type-check').prop('checked', false);
     }
 });
 
 $('#search-type-check').change(function () {
     //By Name/Generic
     if (this.checked) {
+        $('.by-name').addClass('chosen');
+        $('.by-brand').removeClass('chosen');
         $('.s-by-name').addClass('chosen');
         $('.s-by-brand').removeClass('chosen');
         searchByType = 1;
-        $('#search-key').focus();
-        startMainSearch();
+        sSearch.focus();
+        startSearch();
+        $('#main-type-check').prop('checked', true);
     } else {
 
     //By Brand
+        $('.by-brand').addClass('chosen');
+        $('.by-name').removeClass('chosen');
         $('.s-by-brand').addClass('chosen');
         $('.s-by-name').removeClass('chosen');
         searchByType = 2;
-        $('#search-key').focus();
-        startMainSearch();
+        sSearch.focus();
+        startSearch();
+        $('#main-type-check').prop('checked', false);
     }
 });

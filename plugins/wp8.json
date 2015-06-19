@@ -22,13 +22,15 @@
         }
     },
     "installed_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "{5c0dc830-1650-11e5-a737-fb9943358825}"
+        },
         "cordova-plugin-file-transfer": {
-            "PACKAGE_NAME": "{277f0a80-ed19-11e4-9f59-472521c5cc84}"
+            "PACKAGE_NAME": "{5c0dc830-1650-11e5-a737-fb9943358825}"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "{5c0dc830-1650-11e5-a737-fb9943358825}"
         }
     },
-    "dependent_plugins": {
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "{277f0a80-ed19-11e4-9f59-472521c5cc84}"
-        }
-    }
+    "dependent_plugins": {}
 }

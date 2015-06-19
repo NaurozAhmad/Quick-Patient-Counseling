@@ -144,8 +144,8 @@ i.left {
     text-shadow: 1px 1px 1px;
 }
 .search-btn {
-    margin-top: 6px;
-    margin-bottom: 6px;
+    margin-top: 12px;
+    margin-bottom: 12px;
     width: 100%;
 }
 #s-drug-brand {
@@ -220,4 +220,13 @@ i.left {
 #main-stuff .btn-floating {
     width: 42px;
     height: 42px;
+}
+.search-btn span {
+    font-size: 18px;
+}
+.stripy {
+    background-color: #EBF3FC !important;
+}
+#drug-page .collection .collection-item {
+    padding: 5px 20px;
 }
