@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="assets/jquery-theme/no-shadow.css">
 <link rel="stylesheet" type="text/css" href="assets/materialize/css/materialize.min.css">
 <link rel="stylesheet" type="text/css" href="css/custom.css" />
-<title>Quick Patient Counselingc</title>
+<title>Quick Patient Counseling</title>
 
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
@@ -33,7 +33,10 @@
                 <a style="padding-top: 8px; padding-left: 11px;" data-transition="slide" href="#all-drugs-page" id="browse" class="btn-floating waves-effect waves-light">
                     <img style="width: 20px" src="img/medical.png">
                 </a>
-                <h3 id="drug-title">Quick<br/>Patient Counseling</h3>
+                <!-- <h3 id="drug-title">Quick<br/>Patient Counseling</h3> -->
+                <div id="drug-title" style="width: 300px; height: auto; margin-left: auto; margin-right: auto;">
+                    <img style="width:100%;" src="img/qpc-banner.png">
+                </div>
             </div>
         </div>
         <nav class="main-search" id="search-nav">
@@ -211,7 +214,7 @@
                 <h5 class="drug-heading">User Notes</h5>
                 <p id="s-notes"></p>
                 <a class="add-notes note-new btn-floating waves-effect waves-light"><i class="mdi-content-add"></i></a>
-                <a class="add-notes note-edit btn-floating waves-effect waves-light"><i class="mdi-editor-mode-edit"></i></a>
+                <a style="display: none;" class="add-notes note-edit btn-floating waves-effect waves-light"><i class="mdi-editor-mode-edit"></i></a>
             </div>
         </div>
     </div>

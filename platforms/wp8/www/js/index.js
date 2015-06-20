@@ -10,6 +10,7 @@ var logOb = null,
     obj = null,
     singleObject = null,
     singleUserNote = null,
+    modalOpened = false,
     searchByType = 2,
     pSearch = $('#main-search'),
     sSearch = $('#search-key');
@@ -188,7 +189,7 @@ $('#update-local').on('touchend', function (event) {
     update();
 });
 
-$('.search-close').on('touchend', function () {
+$('.search-close').on('click', function () {
     $('#main-stuff').css('display', 'block');
     $('#search-nav').addClass('main-search');
     $('#div-search-result').css('display', 'none');
@@ -317,6 +318,9 @@ function onBackKey(event) {
             $('#div-search-result').css('display', 'none');
             pSearch.val("");
         }
+    } else if (modalOpened === true) {
+        event.preventDefault();
+        $('#notes-modal').closeModal();
     } else {
         history.back();
     }
@@ -382,11 +386,13 @@ $('#notes-save').on('touchend', function () {
         $('.note-new').css('display', 'block');
         $('.note-edit').css('display', 'none');
     }
+    modalOpened = false;
 
 });
 
 $('#notes-cancel').on('touchend', function () {
     $('#notes').val('');
+    modalOpened = false;
 });
 
 $(document).on('pagehide', '#drug-page', function () {
@@ -406,6 +412,7 @@ $(document).on('touchend', '.overlay', function (event) {
 $('.add-notes').on('click', function () {
     $('#notes-modal').openModal();
     $('#notes').focus();
+    modalOpened = true;
 });
 
 // =================================================== Searching =================================================
@@ -433,26 +440,31 @@ function findByBrand(searchKey) {
 }
 
 function doSearch(typed, container) {
-    if (searchByType === 1) {
-        findByName(typed).done(function (object) {
-            $(container).empty();
-            if (object.length > 0) {
-                putValue(container, object);
-            } else {
-                $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
-                $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
-            }
-        });
-    } else if (searchByType === 2) {
-        findByBrand(typed).done(function (object) {
-            $(container).empty();
-            if (object.length > 0) {
-                putValue(container, object);
-            } else {
-                $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
-                $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
-            }
-        });
+    if (typed == "") {
+        $('#main-search-result').empty();
+        $('search-result').empty();
+    } else {
+        if (searchByType === 1) {
+            findByName(typed).done(function (object) {
+                $(container).empty();
+                if (object.length > 0) {
+                    putValue(container, object);
+                } else {
+                    $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+                    $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+                }
+            });
+        } else if (searchByType === 2) {
+            findByBrand(typed).done(function (object) {
+                $(container).empty();
+                if (object.length > 0) {
+                    putValue(container, object);
+                } else {
+                    $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+                    $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+                }
+            });
+        }
     }
 }
 
@@ -485,6 +497,9 @@ sSearch.on('input', function () {
 
 function startMainSearch() {
     var typed = pSearch.val();
+    if (typed === "") {
+        $('#main-search-result').empty();
+    }
     if ($.trim(typed).length > 0) {
         $('#main-stuff').css('display', 'none');
         $('#search-nav').removeClass('main-search');
@@ -495,6 +510,9 @@ function startMainSearch() {
 
 function startSearch() {
     var typed = sSearch.val();
+    if (typed === "") {
+        $('#search-result').empty();
+    }
     if ($.trim(typed).length > 0) {
         doSearch(typed, "#search-result");
     }

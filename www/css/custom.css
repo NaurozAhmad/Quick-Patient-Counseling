@@ -3,7 +3,7 @@
     background-size: 60px 60px;
 }
 nav {
-    background-color: #546FFF;
+    background-color: #aa4400;
     height: auto;
 }
 .nav-bar {
@@ -28,7 +28,7 @@ nav .nav-wrapper i {
     font-size: 1.2rem;
 }
 .btn, .btn-floating {
-    background-color: #546FFF;
+    background-color: #aa4400;
     color: #FFF;
     font-size: 10px;
 }
@@ -90,11 +90,11 @@ nav .nav-wrapper i {
     text-transform: lowercase !important;
 }
 textarea.materialize-textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #546FFF;
-    box-shadow: 0px 1px 0px 0px #546FFF;
+    border-bottom: 1px solid #aa4400;
+    box-shadow: 0px 1px 0px 0px #aa4400;
 }
 textarea.materialize-textarea:focus:not([readonly]) + label {
-    color: #546FFF;
+    color: #aa4400;
 }
 i.left {
     margin-right: 4px;
@@ -105,13 +105,13 @@ i.left {
 }
 #drug-title {
     text-align: center;
-    color: #546FFF;
+    color: #aa4400;
     font-size: 2.3rem;
     line-height: 2.2rem;
 }
 .logo-heading {
     text-align: center;
-    color: #546FFF;
+    color: #aa4400;
 }
 .search-type.right {
     float: right;
@@ -140,7 +140,7 @@ i.left {
     background-color: rgb(84, 111, 255);
 }
 .chosen {
-    color: #546FFF !important;
+    color: #aa4400 !important;
     text-shadow: 1px 1px 1px;
 }
 .search-btn {
@@ -163,20 +163,20 @@ i.left {
     display: inline-block;
     padding: 6px 10px;
     border-radius: 4px;
-    background-color: #546FFF;
+    background-color: #aa4400;
     color: #FFF;
     margin: 0 4px;
 }
 
 @media all and (orientation: landscape) {
     #drug-title {
-        margin-top: 125px;
+        margin-top: 100px;
     }
 }
 
 @media all and (orientation: portrait) {
     #drug-title {
-        margin-top: 35%;
+        margin-top: 30%;
     }
 }
 .popup-trigger {
@@ -206,16 +206,16 @@ i.left {
     background: #000;
 }
 .switch label .lever {
-    background-color: #ACB8F8;
+    background-color: #c8beb7;
 }
 .switch label .lever::after {
-    background-color: #546FFF;
+    background-color: #aa4400;
 }
 .switch label input[type="checkbox"]:checked + .lever {
-    background-color: #ACB8F8;
+    background-color: #c8beb7;
 }
 .switch label input[type="checkbox"]:checked + .lever::after {
-    background-color: #546FFF;
+    background-color: #aa4400;
 }
 #main-stuff .btn-floating {
     width: 42px;
@@ -225,8 +225,12 @@ i.left {
     font-size: 18px;
 }
 .stripy {
-    background-color: #EBF3FC !important;
+    background-color: #FFF2EA !important;
 }
 #drug-page .collection .collection-item {
-    padding: 5px 20px;
+    padding: 2px 20px;
+    font-size: 12px;
+}
+.btn:hover, .btn-large:hover {
+    background-color: #C6723A;
 }
