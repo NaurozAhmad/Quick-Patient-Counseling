@@ -1,21 +1,40 @@
 #home-page {
-    background: url(../img/back.png);
+    /*background: url(../img/back.png);*/
+    background-color: #e3dedb;
     background-size: 60px 60px;
+}
+#result-page {
+    background-color: #FFF;
 }
 nav {
     background-color: #aa4400;
     height: auto;
 }
+#home-page nav, #result-page nav {
+    background-color: #CF5403;
+}
 .nav-bar {
     padding-top: 0;
+}
+.btn-left {
+    float: left;
+    margin-left: 4px;
+    margin-bottom: 4px;
+}
+.btn-right {
+    float: right;
+    margin-right: 4px;
+    margin-bottom: 4px;
 }
 .nav-bar .btn-left {
     margin: 0 0 4px 4px;
     float: left;
+    margin-bottom: 0px !important;
 }
 .nav-bar .btn-right {
     margin: 0 4px 0 0;
     float: right;
+    margin-bottom: 0px !important;
 }
 nav .ui-link {
     margin: 0 !important;
@@ -140,13 +159,12 @@ i.left {
     background-color: rgb(84, 111, 255);
 }
 .chosen {
-    color: #aa4400 !important;
+    color: #FFF !important;
     text-shadow: 1px 1px 1px;
 }
 .search-btn {
-    margin-top: 12px;
-    margin-bottom: 12px;
     width: 100%;
+    background-color: #aa4400;
 }
 #s-drug-brand {
     text-transform: uppercase;
@@ -170,7 +188,7 @@ i.left {
 
 @media all and (orientation: landscape) {
     #drug-title {
-        margin-top: 100px;
+        margin-top: 60px;
     }
 }
 
@@ -207,22 +225,29 @@ i.left {
 }
 .switch label .lever {
     background-color: #c8beb7;
+    margin: 0 8px;
+}
+.switch label {
+    margin-bottom: 0 !important;
 }
 .switch label .lever::after {
-    background-color: #aa4400;
+    background-color: #F29158;
 }
 .switch label input[type="checkbox"]:checked + .lever {
     background-color: #c8beb7;
 }
 .switch label input[type="checkbox"]:checked + .lever::after {
-    background-color: #aa4400;
+    background-color: #F29158;
+}
+.switch {
+    position: relative;
 }
 #main-stuff .btn-floating {
     width: 42px;
     height: 42px;
 }
 .search-btn span {
-    font-size: 18px;
+    font-size: 16px;
 }
 .stripy {
     background-color: #FFF2EA !important;
@@ -231,6 +256,32 @@ i.left {
     padding: 2px 20px;
     font-size: 12px;
 }
-.btn:hover, .btn-large:hover {
-    background-color: #C6723A;
+.btn:hover, .btn-large:hover, .btn:active, btn-large:active, .btn:focus, .btn-large:focus {
+    background-color: #aa4400;
+}
+.single-object:hover {
+    background-color: #EAEAEA;
+}
+.single-object:focus {
+    background-color: #FFF;
+}
+.search-back {
+    padding-top: 10px !important;
+    position: absolute;
+    max-height: 100%;
+    top: 0px;
+    left: 4px;
+}
+.search-back:hover, .search-back:focus, .search-back:active {
+    color: #fff;
+}
+.search-reset {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    cursor: pointer;
+    color: #CF5403;
+}
+.input-field input[type="search"]:focus ~ .search-reset {
+    color: #444;
 }

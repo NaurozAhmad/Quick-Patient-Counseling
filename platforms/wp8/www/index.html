@@ -40,28 +40,32 @@
             </div>
         </div>
         <nav class="main-search" id="search-nav">
+            <div class="search-btn" align="center">
+                <div class="switch">
+                    <a style="display: none" id="main-back" class="search-back waves-effect waves-light btn btn-left">
+                        <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                        Back
+                    </a>
+                    <label>
+                        <span class="by-brand chosen">Brand</span>
+                        <input id="main-type-check" type="checkbox" data-role="none">
+                        <span class="lever"></span>
+                        <span class="by-name">Generic</span>
+                    </label>
+                </div>
+            </div>
             <div class="nav-wrapper">
                 <form>
                     <div class="input-field">
-                        <input onchange="searchMain()" data-role="none" class="search search-key" id="main-search" type="search" autofocus>
+                        <input onchange="searchMain()" data-role="none" class="search search-key" id="main-search" autofocus type="search">
                         <label for="search">
                             <i style="display: inline-block" class="mdi-action-search"></i>
                         </label>
-                        <i class="mdi-navigation-close search-close"></i>
+                        <span class="search-reset" id="main-search-reset">Clear</span>
                     </div>
                 </form>
             </div>
         </nav>
-        <div class="search-btn" align="center">
-            <div class="switch">
-                <label>
-                    <span class="by-brand chosen">By Brand</span>
-                    <input id="main-type-check" type="checkbox" data-role="none">
-                    <span class="lever"></span>
-                    <span class="by-name">By Generic</span>
-                </label>
-            </div>
-        </div>
 
         <div id="div-search-result" style="display:none">
             <ul class="collection" id="main-search-result">
@@ -75,11 +79,11 @@
     <div data-role="page" id="all-drugs-page">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" id="all-drugs-back" href="#home-page" class="waves-effect waves-light btn btn-left">
+                <a data-transition="slide" data-direction="reverse" href="#home-page" class="back-to-main waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Main
                 </a>
-                <a data-transition="slide" class="waves-effect waves-light btn btn-right" href="#result-page">
+                <a data-transition="slide" data-direction="reverse" href="#result-page" class="goto-second-search waves-effect waves-light btn btn-right">
                     <i class="result-nav-btn left mdi-action-search"></i>
                     Search
                 </a>
@@ -90,6 +94,17 @@
 
             </ul>
         </div>
+        <div align="center">
+            <!--<a href="#" class="btn btn-left waves-light waves-effect drugsPrev">Back</a>-->
+            <a href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
+                <i class="mdi-navigation-chevron-left"></i>
+            </a>
+            <span class="current-drugs"></span>
+            <!--<a href="#" class="btn btn-right waves-light waves-effect drugsNext">Next</a>-->
+            <a href="#" class="btn-floating waves-effect waves-light drugsNext btn-right">
+                <i class="mdi-navigation-chevron-right"></i>
+            </a>
+        </div>
     </div>
 
     <!-- =================================================== About ======================================= -->
@@ -97,7 +112,7 @@
     <div data-role="page" id="about">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" class="back waves-effect waves-light btn btn-left">
+                <a data-transition="slide" data-direction="reverse" href="#home-page" class="back-to-main back waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
@@ -109,6 +124,7 @@
                 <img style="width: 40px; height: auto;" src="img/loading.GIF">
             </div>
             <button id="update-local" class="waves-effect waves-light btn">Update</button>
+            <button onclick="showAllKeywords()" class="waves-effect waves-light btn">Keywords</button>
             <h5>
                 About
             </h5>
@@ -144,26 +160,31 @@
 
     <div data-role="page" id="result-page">
         <nav>
+            <div class="search-btn" align="center">
+                <div class="switch">
+                    <a data-transition="slide" href="#all-drugs-page" class="search-back waves-effect waves-light btn btn-left">
+                        <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                        Back
+                    </a>
+                    <label>
+                        <span class="s-by-brand chosen">Brand</span>
+                        <input id="search-type-check" type="checkbox" data-role="none">
+                        <span class="lever"></span>
+                        <span class="s-by-name">Generic</span>
+                    </label>
+                </div>
+            </div>
             <div class="nav-wrapper">
                 <form>
                     <div class="input-field">
                         <input onchange="searchSecond()" class="search search-key" id="search-key" type="search" autofocus data-role="none">
                         <label for="search"><i class="mdi-action-search"></i></label>
-                        <i class="mdi-navigation-close search-result-close"></i>
+                        <span class="search-reset" id="second-search-reset">Clear</span>
                     </div>
                 </form>
             </div>
         </nav>
-        <div class="search-btn" align="center">
-            <div class="switch">
-                <label>
-                    <span class="s-by-brand chosen">By Brand</span>
-                    <input id="search-type-check" type="checkbox" data-role="none">
-                    <span class="lever"></span>
-                    <span class="s-by-name">By Generic</span>
-                </label>
-            </div>
-        </div>
+        
         <div>
             <ul class="collection" id="search-result">
 
@@ -176,11 +197,11 @@
     <div data-role="page" id="drug-page">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" href="" class="back waves-effect waves-light btn btn-left">
+                <a data-transition="slide" data-direction="reverse" class="back waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
-                <a data-transition="slide" class="waves-effect waves-light btn btn-right" id="drug-page-search" href="#result-page">
+                <a data-transition="slide" href="#result-page" data-direction="reverse" class="goto-second-search waves-effect waves-light btn btn-right" id="drug-page-search">
                     <i class="result-nav-btn left mdi-action-search"></i>
                     Search
                 </a>

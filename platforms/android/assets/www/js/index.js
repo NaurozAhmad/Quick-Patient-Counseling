@@ -13,7 +13,9 @@ var logOb = null,
     modalOpened = false,
     searchByType = 2,
     pSearch = $('#main-search'),
-    sSearch = $('#search-key');
+    sSearch = $('#search-key'),
+    nextBatch = 50,
+    done = 0;
 
 //============================================ Mutual Functions =================================================
 
@@ -35,7 +37,7 @@ function findByID(id) {
 function putValue(ul, jsonObject) {
     var i,
         object = null;
-    for (i = 0; i < jsonObject.length; i = i + 1) {
+    for (i = 0; i < 50; i++) {
         object = jsonObject[i];
         if (searchByType === 1) {
             $(ul).append('<li onclick="onSingleDrug(' + object.drug_id + ')" class="collection-item single-object">' +
@@ -53,6 +55,66 @@ function putValue(ul, jsonObject) {
     }
 }
 
+function putDrugs() {
+    $('#all-drugs-list').empty();
+
+    var object;
+    if (obj !== null) {
+        $('.drugsNext').css('display', 'inline-block');
+        $('.drugsPrev').css('display', 'inline-block');
+        for (var i = done; i < nextBatch; i++) {
+            if (i < obj.length) {
+                object = obj[i];
+                $('#all-drugs-list').append('<li onclick="onSingleDrug(' + object.drug_id + ')" class="collection-item single-object">' +
+                    '<a class="result-link" rel="external">' +
+                    '<span  style="font-weight: bold">' + object.drug_brand +
+                    ' <span style="font-weight: normal !important;"  class="title-name">(' +
+                    object.drug_name + ')</span></span></a></li>');
+            }
+            else {
+                break;
+            }
+        }
+        if (nextBatch > obj.length) {
+            done = 10000;
+        }
+        $('.current-drugs').text(done + 1 + ' to ' + nextBatch + " out of " + obj.length);
+    }
+    else {
+        $('#all-drugs-list').append('<li>No drugs yet. Please update.</li>');
+        $('.drugsNext').css('display', 'none');
+        $('.drugsPrev').css('display', 'none');
+    }
+}
+
+$('.drugsNext').on('click',function (e) {
+    e.preventDefault();
+    done = nextBatch;
+    if (done > 0) {
+        $('.drugsPrev').removeClass('disabled');
+        nextBatch = nextBatch + 50;
+        putDrugs();
+        window.scrollTo(0,0);
+    }
+    if (nextBatch >= obj.length) {
+        $('.drugsNext').addClass('disabled');
+    }
+});
+
+$('.drugsPrev').on('click',function (e) {
+    e.preventDefault();
+    done = done - 50;
+    nextBatch = nextBatch - 50;
+    putDrugs();
+    window.scrollTo(0,0);
+    if (done <= 0) {
+        $('.drugsPrev').addClass('disabled');
+    }
+    if (nextBatch < obj.length) {
+        $('.drugsNext').removeClass('disabled');
+    }
+});
+
 //============================================ End Mutual Functions ==============================================
 
 //================================================ File Function =================================================
@@ -69,14 +131,14 @@ function readFile() {
         reader.onloadend = function () {
             var string = this.result;
             if (string == "") {
-                // $("#update-modal").openModal();
-                // firstUpdate();
                 $('#all-drugs-list').empty();
                 $('#all-drugs-list').append('<li>No drugs yet. Please update.</li>');
             } else {
                 obj = JSON.parse(string);
-                $('#all-drugs-list').empty();
-                putValue('#all-drugs-list', obj);
+                // $('#all-drugs-list').empty();
+                // done = 0;
+                // nextBatch = 50;
+                // putDrugs();
             }
         };
         reader.readAsText(file);
@@ -125,7 +187,7 @@ function onDeviceReady() {
         });
     });
     $('.tooltipped').tooltip({delay: 50});
-
+    $('#all-drugs-list').empty();
 }
 
 $(document).ready(function () {
@@ -148,11 +210,6 @@ function writeStuff(str) {
         Materialize.toast('Local database updated.', 2000);
     }, fail);
 }
-
-//================================================= End File Function ================================================
-
-//================================================= App functionality ================================================
-
 
 function firstUpdate() {
     $.ajax({
@@ -183,28 +240,41 @@ function update() {
     });
 }
 
+//================================================= End File Function ================================================
+
+//================================================= App functionality ================================================
+
 $('#update-local').on('touchend', function (event) {
     event.preventDefault();
     $('.loading').css('display', 'block');
     update();
 });
 
-$('.search-close').on('click', function () {
+//resets main search to home page.
+$('#main-back').on('click', function () {
+    $('#main-back').css('display', 'none');
     $('#main-stuff').css('display', 'block');
     $('#search-nav').addClass('main-search');
     $('#div-search-result').css('display', 'none');
     pSearch.val("");
-});
-
-$('.search-result-close').on('touchend', function () {
-    $.mobile.changePage('#all-drugs-page');
+    pSearch.focus();
 });
 
 $('#drug-page-search').on('touchend', function () {
     sSearch.val('');
     $('#search-result').empty();
+    sSearch.focus();
 });
 
+$('.goto-second-search').on('touchend', function(e) {
+    sSearch.focus();
+});
+
+$('.back-to-main').on('touchend', function () {
+    pSearch.focus();
+});
+
+//when open a single drug details page.
 function onSingleDrug(id) {
     var jsonStuff = null;
     findByID(id).done(function (object) {
@@ -212,13 +282,13 @@ function onSingleDrug(id) {
         $('#keywords').empty();
         $('#s-drug-brand').text(object.drug_brand);
         $('#s-drug-name').text('(' + object.drug_name + ')');
-        $('#s-food').text(object.food);
-        $('#s-sedation').text(object.sedation);
-        $('#s-preg').text(object.preg_lact);
-        $('#s-maj').text(object.maj_se);
-        $('#s-caution').text(object.caution);
-        $('#s-bbw').text(object.bbw);
-        $('#s-key-points').text(object.key_points);
+        $('#s-food').text((object.food !== "") ? object.food : ' - ');
+        $('#s-sedation').text((object.sedation !== "") ? object.sedation : ' - ');
+        $('#s-preg').text((object.preg_lact !== "") ? object.preg_lact : ' - ');
+        $('#s-maj').text((object.maj_se !== "") ? object.maj_se : ' - ');
+        $('#s-caution').text((object.caution !== "") ? object.caution : ' - ');
+        $('#s-bbw').text((object.bbw !== "") ? object.bbw : ' - ');
+        $('#s-key-points').text((object.key_points !== "") ? object.key_points : ' - ');
         $('#s-drug-id').val(object.drug_id);
         var i,
             l;
@@ -255,47 +325,42 @@ function onSingleDrug(id) {
     });
 }
 
-var pageID = false;
-var searchID = 0;
-var backPressed = 0;
+$(document).on('pagehide', "#result-page", function () {
+    $('.back').attr('href', '#result-page');
+});
 
+$(document).on('pagebeforeshow', "#all-drugs-page", function () {
+    readFile();
+});
+
+$(document).on('pageshow', "#all-drugs-page", function () { 
+    putDrugs();
+});
+
+$(document).on('pagebeforehide', "#all-drugs-page", function () {
+    pSearch.val('');
+    $('#main-search-result').empty();
+    sSearch.val('');
+    $('#search-result').empty();
+    pageID = false;
+    $('.back').attr('href', '#all-drugs-page');
+});
+
+$(document).on('pageshow', "#about", function () {
+    checkForUpdate();
+});
+
+//---- Hard back key pressed function for app exit.
+var pageID = false;     //to check if at home page. for app exit function.
+var backPressed = 0;    //number of times hard back key pressed.
 
 $(document).on('pageshow', "#home-page", function () {
     pageID = true;
-    searchID = 1;
 });
 
 $(document).on('pagehide', "#home-page", function () {
     pageID = false;
     $('.back').attr('href', '#home-page');
-});
-
-$(document).on('pagehide', "#all-drugs-page", function () {
-    pageID = false;
-    $('.back').attr('href', '#all-drugs-page');
-});
-
-$(document).on('pageshow', "#result-page", function () {
-    searchID = 2;
-});
-
-$(document).on('pagehide', "#result-page", function () {
-    $('.back').attr('href', '#result-page');
-});
-
-$(document).on('pageshow', "#all-drugs-page", function () {
-    readFile();
-});
-
-$(document).on('pagehide', "#all-drugs-page", function () {
-    pSearch.val('');
-    $('#main-search-result').empty();
-    sSearch.val('');
-    $('#search-result').empty();
-});
-
-$(document).on('pageshow', "#about", function () {
-    checkForUpdate();
 });
 
 function onBackKey(event) {
@@ -418,53 +483,60 @@ $('.add-notes').on('click', function () {
 
 // =================================================== Searching =================================================
 
-function findByName(searchKey) {
-    var deferred = $.Deferred(),
-        object = obj,
-        results = object.filter(function (element) {
-            var drugName = element.drug_name;
-            return drugName.toLowerCase().indexOf(searchKey.toLowerCase()) == 0;
-        });
-    deferred.resolve(results);
-    return deferred.promise();
-}
-
-function findByBrand(searchKey) {
-    var deferred = $.Deferred(),
-        object = obj,
-        results = object.filter(function (element) {
-            var drugBrand = element.drug_brand;
-            return drugBrand.toLowerCase().indexOf(searchKey.toLowerCase()) == 0;
-        });
-    deferred.resolve(results);
-    return deferred.promise();
-}
-
 function doSearch(typed, container) {
     if (typed == "") {
         $('#main-search-result').empty();
         $('search-result').empty();
     } else {
         if (searchByType === 1) {
-            findByName(typed).done(function (object) {
-                $(container).empty();
-                if (object.length > 0) {
-                    putValue(container, object);
-                } else {
-                    $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
-                    $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+            var object = obj;
+            var results = [];
+            if (object.length > 0) {
+                $('#main-search-result').empty();
+                $('#search-result').empty();
+                for (var i = 0; i < object.length; i++) {
+                    var drug = object[i];
+                    if (drug.drug_name.toLowerCase().indexOf(typed.toLowerCase()) == 0) {
+                        results.push(drug);
+                    }
                 }
-            });
-        } else if (searchByType === 2) {
-            findByBrand(typed).done(function (object) {
-                $(container).empty();
-                if (object.length > 0) {
-                    putValue(container, object);
-                } else {
-                    $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
-                    $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+            }
+            else {
+                $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+                $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+            }
+            if(results.length > 0) {
+                putValue(container, results);
+            }
+            else {
+                $('#main-search-result').empty();
+                $('search-result').empty();
+            }
+        } 
+        else if (searchByType === 2) {
+            var object = obj;
+            var results = [];
+            if (object.length > 0) {
+                $('#search-result').empty();
+                $('#main-search-result').empty();
+                for (var i = 0; i < object.length; i++) {
+                    var drug = object[i];
+                    if (drug.drug_brand.toLowerCase().indexOf(typed.toLowerCase()) == 0) {
+                        results.push(drug);
+                    }
                 }
-            });
+            }
+            else {
+                $('#main-search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+                $('#search-result').empty().append('<li style="padding-left: 10px">No results found.</li>');
+            }
+            if(results.length > 0) {
+                putValue(container, results);
+            }
+            else {
+                $('#main-search-result').empty();
+                $('#search-result').empty();
+            }
         }
     }
 }
@@ -475,6 +547,20 @@ function searchMain() {
 function searchSecond() {
     startMainSearch();
 }
+
+$('#main-search-reset').on('click', function(e) {
+    pSearch.val('');
+    pSearch.focus();
+    $('#main-search-result').empty();
+    $('#search-result').empty();
+});
+
+$('#second-search-reset').on('click', function(e) {
+    sSearch.val('');
+    sSearch.focus();
+    $('#main-search-result').empty();
+    $('#search-result').empty();
+});
 
 //====================== Catch enter key event =====================
 $(document).on('keypress', function (e) {
@@ -503,8 +589,10 @@ function startMainSearch() {
     }
     if ($.trim(typed).length > 0) {
         $('#main-stuff').css('display', 'none');
+        $('#main-back').css('display', 'inline-block');
         $('#search-nav').removeClass('main-search');
         $('#div-search-result').css('display', 'block');
+        window.scrollTo(0,0);
         doSearch(typed, "#main-search-result");
     }
 }
@@ -568,3 +656,33 @@ $('#search-type-check').change(function () {
         $('#main-type-check').prop('checked', false);
     }
 });
+
+//================================================= Show list of keywords ==========================================
+
+var keywordArray = [];
+var uniqueKeywords = [];
+var uniqueKeyDesc = [];
+
+function showAllKeywords () {
+    for (var i = 0; i < obj.length; i++) {
+        var object = obj[i];
+        for (var j = 0; j < object.keywords.length; j++) {
+            var keyword = object.keywords[j];
+            keywordArray.push(keyword);
+        }
+    }
+    $.each(keywordArray, function (index, item) {
+        if ($.inArray(item.keyword_name, uniqueKeywords) === -1) {
+            uniqueKeywords.push(item.keyword_name);
+        }
+    });
+    $.each(keywordArray, function (index, item) {
+        if ($.inArray(item.keyword_desc, uniqueKeyDesc) === -1) {
+            uniqueKeyDesc.push(item.keyword_desc);
+        }
+    });
+    for (var i = 0; i < uniqueKeywords.length; i++) {
+        // var keyword = uniqueKeywords[i];
+        $('#keywords-table').append('<tr>' + '<td>' + uniqueKeywords[i] + '</td>' + '<td>' + uniqueKeyDesc[i] + '</td>' + '</tr>');
+    }
+}
