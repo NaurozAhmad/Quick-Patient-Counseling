@@ -662,6 +662,7 @@ $('#search-type-check').change(function () {
 var keywordArray = [];
 var uniqueKeywords = [];
 var uniqueKeyDesc = [];
+var table = $('#keywords-table');
 
 function showAllKeywords () {
     for (var i = 0; i < obj.length; i++) {
@@ -681,8 +682,11 @@ function showAllKeywords () {
             uniqueKeyDesc.push(item.keyword_desc);
         }
     });
+    
+    table.empty();
+    table.append('<thead style="font-weight: bold"><td>Keywords</td><td>Description</td></thead>');
+    
     for (var i = 0; i < uniqueKeywords.length; i++) {
-        // var keyword = uniqueKeywords[i];
-        $('#keywords-table').append('<tr>' + '<td>' + uniqueKeywords[i] + '</td>' + '<td>' + uniqueKeyDesc[i] + '</td>' + '</tr>');
+        table.append('<tr>' + '<td>' + uniqueKeywords[i] + '</td>' + '<td>' + uniqueKeyDesc[i] + '</td>' + '</tr>');
     }
 }

@@ -124,7 +124,6 @@
                 <img style="width: 40px; height: auto;" src="img/loading.GIF">
             </div>
             <button id="update-local" class="waves-effect waves-light btn">Update</button>
-            <button onclick="showAllKeywords()" class="waves-effect waves-light btn">Keywords</button>
             <h5>
                 About
             </h5>
@@ -137,6 +136,7 @@
             <h5>
                 How to use
             </h5>
+            <a href="#keywords-page" onclick="showAllKeywords()" class="waves-effect waves-light btn">Keywords</a>
             <ul>
                 <li>1. Lorem ipsum dolor sit amet</li>
                 <li>2. Lorem ipsum dolor sit amet</li>
@@ -237,6 +237,27 @@
                 <a class="add-notes note-new btn-floating waves-effect waves-light"><i class="mdi-content-add"></i></a>
                 <a style="display: none;" class="add-notes note-edit btn-floating waves-effect waves-light"><i class="mdi-editor-mode-edit"></i></a>
             </div>
+        </div>
+    </div>
+    
+    <!-- =================================================== Keywords ======================================= -->
+    
+    <div data-role="page" id="keywords-page">
+        <nav class="nav-bar">
+            <div class="nav-wrapper" style="height: 44px;">
+                <a data-transition="slide" data-direction="reverse" href="#about" class="waves-effect waves-light btn btn-left">
+                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                    Back
+                </a>
+            </div>
+        </nav>
+        <div class="container">
+            <table id="keywords-table" class="striped">
+                <thead style="font-weight: bold">
+                    <td>Keywords</td>
+                    <td>Description</td>
+                </thead>
+            </table>
         </div>
     </div>
 

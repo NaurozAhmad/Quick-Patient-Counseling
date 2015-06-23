@@ -684,7 +684,7 @@ function showAllKeywords () {
     });
     
     table.empty();
-    table.append('<thead><td>Keywords</td><td>Description</td></thead>');
+    table.append('<thead style="font-weight: bold"><td>Keywords</td><td>Description</td></thead>');
     
     for (var i = 0; i < uniqueKeywords.length; i++) {
         table.append('<tr>' + '<td>' + uniqueKeywords[i] + '</td>' + '<td>' + uniqueKeyDesc[i] + '</td>' + '</tr>');

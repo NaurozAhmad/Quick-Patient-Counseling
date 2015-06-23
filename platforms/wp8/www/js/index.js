@@ -660,17 +660,33 @@ $('#search-type-check').change(function () {
 //================================================= Show list of keywords ==========================================
 
 var keywordArray = [];
+var uniqueKeywords = [];
+var uniqueKeyDesc = [];
+var table = $('#keywords-table');
 
 function showAllKeywords () {
     for (var i = 0; i < obj.length; i++) {
         var object = obj[i];
-        for (var j = 0; j < object.keywords; j++) {
+        for (var j = 0; j < object.keywords.length; j++) {
             var keyword = object.keywords[j];
             keywordArray.push(keyword);
         }
     }
-    for (var i = 0; i < keywordArray.length; i++) {
-        var keyword = keywordArray[i];
-        console.log('keyword name: ' + keyword.keyword_name + " keyword description: " + keyword.keyword_desc);
+    $.each(keywordArray, function (index, item) {
+        if ($.inArray(item.keyword_name, uniqueKeywords) === -1) {
+            uniqueKeywords.push(item.keyword_name);
+        }
+    });
+    $.each(keywordArray, function (index, item) {
+        if ($.inArray(item.keyword_desc, uniqueKeyDesc) === -1) {
+            uniqueKeyDesc.push(item.keyword_desc);
+        }
+    });
+    
+    table.empty();
+    table.append('<thead style="font-weight: bold"><td>Keywords</td><td>Description</td></thead>');
+    
+    for (var i = 0; i < uniqueKeywords.length; i++) {
+        table.append('<tr>' + '<td>' + uniqueKeywords[i] + '</td>' + '<td>' + uniqueKeyDesc[i] + '</td>' + '</tr>');
     }
 }
