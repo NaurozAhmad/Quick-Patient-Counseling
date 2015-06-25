@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- http://www.rphapps.com/admin 
-    Username: foo
-    Password: bar
--->
 <meta charset="utf-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="msapplication-tap-highlight" content="no" />
@@ -26,7 +22,7 @@
     <div data-role="page" id="home-page">
         <div id="main-stuff">
             <div>
-                <a style="top: 5px; position: absolute; right: 5px;" data-transition="slide" href="#about" id="info-update" class="btn-floating waves-effect waves-light">
+                <a onclick="showAllKeywords()" style="top: 5px; position: absolute; right: 5px;" data-transition="slide" href="#about" id="info-update" class="btn-floating waves-effect waves-light">
                     <i style="padding-top: 3px;" class="mdi-action-info-outline"></i>
                 </a>
                 
@@ -40,19 +36,11 @@
             </div>
         </div>
         <nav class="main-search" id="search-nav">
-            <div class="search-btn" align="center">
-                <div class="switch">
-                    <a style="display: none" id="main-back" class="search-back waves-effect waves-light btn btn-left">
-                        <i class="result-nav-btn left mdi-image-navigate-before"></i> 
-                        Back
-                    </a>
-                    <label>
-                        <span class="by-brand chosen">Brand</span>
-                        <input id="main-type-check" type="checkbox" data-role="none">
-                        <span class="lever"></span>
-                        <span class="by-name">Generic</span>
-                    </label>
-                </div>
+            <div style="display: none" class="search-options" id="main-search-options">
+                <a id="main-back" class="search-back waves-effect waves-light btn btn-left">
+                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                    Back
+                </a>
             </div>
             <div class="nav-wrapper">
                 <form>
@@ -127,23 +115,42 @@
             <h5>
                 About
             </h5>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <p>This app contains the information of drugs and enables users to make notes on specific drugs.</p>
+            <p>Fast searching for finding quick information of any drugs.</p> 
+            
+            <div class="container">
+                <table id="keywords-table" class="striped">
+                    <thead style="font-weight: bold">
+                        <td>Keywords</td>
+                        <td>Description</td>
+                    </thead>
+                </table>
+            </div>
             <h5>
                 How to use
             </h5>
-            <a href="#keywords-page" onclick="showAllKeywords()" class="waves-effect waves-light btn">Keywords</a>
-            <ul>
-                <li>1. Lorem ipsum dolor sit amet</li>
-                <li>2. Lorem ipsum dolor sit amet</li>
-                <li>3. Lorem ipsum dolor sit amet</li>
-                <li>4. Lorem ipsum dolor sit amet</li>
-                <li>5. Lorem ipsum dolor sit amet</li>
-            </ul>
+            <h6>Main Page</h6>
+            Contains the main search bar and two links to 'all drugs' and 'information/help'.
+            <ol>
+                <li>Start the search by typing into the search bar.</li>
+                <li>Search results will be shown as you are typing.</li>
+                <li>Tap a single drug to go to its details.</li>
+                <li>Press 'clear' to clear the search bar.</li>
+                <li>Press 'back' to go to the main page.</li>
+            </ol>
+            <h6>All Drugs</h6>
+            <ol>
+                <li>Shows list of all drugs.</li>
+                <li>Each page shows 50 drugs.</li>
+                <li>Link to search and back to the main page.</li>
+            </ol>
+            <h6>Single Drug Details</h6>
+            <ol>
+                <li>Shows details of a single drug.</li>
+                <li>Tap and hold Keywords to see their description.</li>
+                <li>If no notes are added to a drug, tap the '+' icon to add a note.</li>
+                <li>If notes have been previously added, then tap the 'pen' icon to edit notes.</li>
+            </ol>
             <h5>
                 Disclaimer
             </h5>
@@ -160,19 +167,11 @@
 
     <div data-role="page" id="result-page">
         <nav>
-            <div class="search-btn" align="center">
-                <div class="switch">
-                    <a data-transition="slide" href="#all-drugs-page" class="search-back waves-effect waves-light btn btn-left">
-                        <i class="result-nav-btn left mdi-image-navigate-before"></i> 
-                        Back
-                    </a>
-                    <label>
-                        <span class="s-by-brand chosen">Brand</span>
-                        <input id="search-type-check" type="checkbox" data-role="none">
-                        <span class="lever"></span>
-                        <span class="s-by-name">Generic</span>
-                    </label>
-                </div>
+            <div class="search-options">
+                <a href="#all-drugs-page" class="search-back waves-effect waves-light btn btn-left">
+                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                    Back
+                </a>
             </div>
             <div class="nav-wrapper">
                 <form>
@@ -237,27 +236,6 @@
                 <a class="add-notes note-new btn-floating waves-effect waves-light"><i class="mdi-content-add"></i></a>
                 <a style="display: none;" class="add-notes note-edit btn-floating waves-effect waves-light"><i class="mdi-editor-mode-edit"></i></a>
             </div>
-        </div>
-    </div>
-    
-    <!-- =================================================== Keywords ======================================= -->
-    
-    <div data-role="page" id="keywords-page">
-        <nav class="nav-bar">
-            <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" href="#about" class="waves-effect waves-light btn btn-left">
-                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
-                    Back
-                </a>
-            </div>
-        </nav>
-        <div class="container">
-            <table id="keywords-table" class="striped">
-                <thead style="font-weight: bold">
-                    <td>Keywords</td>
-                    <td>Description</td>
-                </thead>
-            </table>
         </div>
     </div>
 
