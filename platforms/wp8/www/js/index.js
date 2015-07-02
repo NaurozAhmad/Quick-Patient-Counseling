@@ -78,10 +78,12 @@ var scrolling = false;
 
 $(document).on('touchstart', '.single-object', function() {
     scrolling = false;
+    $(this).addClass('hovering');
 });
 
 $(document).on('touchmove', '.single-object', function() {
     scrolling = true;
+    $(this).removeClass('hovering');
 });
 
 $(document).on('touchend', '.single-object', function (event) {
@@ -89,6 +91,7 @@ $(document).on('touchend', '.single-object', function (event) {
     if (scrolling === false) {
         var id = $(this).children('.hidden-id').val();
         onSingleDrug(id);
+        $(this).removeClass('hovering');
     }
 });
 

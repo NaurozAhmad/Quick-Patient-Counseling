@@ -4,7 +4,7 @@
     <Languages xmlns="">
         <Language code="en-US" />
     </Languages>
-    <App Author="Quick Patient Counseling Author" BitsPerPixel="32" Description="Apache Cordova for Windows Phone" Genre="apps.normal" ProductID="{5c0dc830-1650-11e5-a737-fb9943358825}" Publisher="Quick Patient Counseling Publisher" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="Quick Patient Counseling" Version="1.0.0" xmlns="">
+    <App Author="PhoneGap Team" BitsPerPixel="32" Description="Drug Info app made in Cordova" Genre="apps.normal" ProductID="{5c0dc830-1650-11e5-a737-fb9943358825}" Publisher="PhoneGap Team" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="Quick Patient Counseling" Version="1.0.0" xmlns="">
         <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
         <Capabilities>
             <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />

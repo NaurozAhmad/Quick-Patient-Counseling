@@ -1,6 +1,10 @@
 body.ui-mobile-viewport.ui-overlay-a {
     background-color: #e3dedb !important;
 }
+#about h6 {
+    font-size: 16px;
+    font-weight: bold;
+}
 #home-page {
     /*background: url(../img/back.png);*/
     background-color: #e3dedb;
@@ -265,7 +269,7 @@ i.left {
 .btn:hover, .btn-large:hover, .btn:active, btn-large:active, .btn:focus, .btn-large:focus {
     background-color: #aa4400;
 }
-.single-object:hover {
+.single-object.hovering {
     background-color: #EAEAEA;
 }
 .single-object:focus {

@@ -1,5 +1,5 @@
 /*jslint browser: true*/
-/*global $, jQuery, cordova, alert, Blob, FileReader, getPrev, Materialize, update*/
+/*global $, jQuery, cordova, alert, Blob, FileReader, getPrev, Materialize, update, FastClick*/
 
 var logOb = null,
     userNotes = null,
@@ -145,6 +145,7 @@ function readFile() {
                 obj = JSON.parse(string);
                 roughObj = JSON.parse(string);
                 obj = sortByKey(obj, 'drug_brand');
+                putDrugs();
             }
         };
         reader.readAsText(file);
@@ -163,23 +164,23 @@ function readUserNotes() {
     }, fail);
 }
 
-function checkForUpdate() {
-    $.ajax({
-        url: "http://rphapps.com/admin/drugs-json.php",
-        method: "GET",
-        dataType: "json",
-    }).done(function (data) {
-        newStuff = data;
-        oldStuff = roughObj;
-        if (JSON.stringify(newStuff) === JSON.stringify(oldStuff)) {
-            Materialize.toast('Local database up to date.', 2000);
-        } else {
-            Materialize.toast('Update available.', 2000);
-        }
-    }).fail(function () {
-        alert("Failed to connect to server. Please check your connection.");
-    });
-}
+// function checkForUpdate() {
+//     $.ajax({
+//         url: "http://rphapps.com/admin/drugs-json.php",
+//         method: "GET",
+//         dataType: "json",
+//     }).done(function (data) {
+//         newStuff = data;
+//         oldStuff = roughObj;
+//         if (JSON.stringify(newStuff) === JSON.stringify(oldStuff)) {
+//             Materialize.toast('Local database up to date.', 2000);
+//         } else {
+//             Materialize.toast('Update available.', 2000);
+//         }
+//     }).fail(function () {
+//         alert("Failed to connect to server. Please check your connection.");
+//     });
+// }
 
 function onDeviceReady() {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dir) {
@@ -194,6 +195,7 @@ function onDeviceReady() {
     });
     $('.tooltipped').tooltip({delay: 50});
     $('#all-drugs-list').empty();
+    FastClick.attach(document.body);
 }
 
 $(document).ready(function () {
@@ -311,25 +313,58 @@ $(document).on('pagehide', "#result-page", function () {
     $('.back').attr('href', '#result-page');
 });
 
-$(document).on('pagebeforeshow', "#all-drugs-page", function () {
-    readFile();
+// $(document).on('pagebeforeshow', "#all-drugs-page", function () {
+//     readFile();
+// });
+
+// $(document).on('pageshow', "#all-drugs-page", function () { 
+//     putDrugs();
+// });
+
+// $(document).on('pagebeforehide', "#all-drugs-page", function () {
+//     pSearch.val('');
+//     $('#main-search-result').empty();
+//     sSearch.val('');
+//     $('#search-result').empty();
+//     pageID = false;
+//     $('.back').attr('href', '#all-drugs-page');
+// });
+
+//======================================= Redirects ============================================
+
+$('#browse').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#all-drugs-page');
 });
 
-$(document).on('pageshow', "#all-drugs-page", function () { 
-    putDrugs();
+$('#info-update').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#about');
 });
 
-$(document).on('pagebeforehide', "#all-drugs-page", function () {
-    pSearch.val('');
-    $('#main-search-result').empty();
-    sSearch.val('');
-    $('#search-result').empty();
-    pageID = false;
-    $('.back').attr('href', '#all-drugs-page');
+$('#drugs-to-home').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#home-page');
 });
 
-$(document).on('pageshow', "#about", function () {
-    checkForUpdate();
+$('#drugs-to-results').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#result-page');
+});
+
+$('#about-to-home').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#home-page');
+});
+
+$('#results-to-drugs').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#all-drugs-page');
+});
+
+$('#drug-page-search').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#result-page');
 });
 
 //---- Hard back key pressed function for app exit.

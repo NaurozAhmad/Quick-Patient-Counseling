@@ -16,17 +16,18 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile-1.4.5.js"></script>
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="js/fastclick.js"></script>
 </head>
 <body>
     <!-- =================================================== Home Page ======================================= -->
     <div data-role="page" id="home-page">
         <div id="main-stuff">
             <div>
-                <a onclick="showAllKeywords()" style="top: 5px; position: absolute; right: 5px;" data-transition="slide" href="#about" id="info-update" class="btn-floating waves-effect waves-light">
+                <a onclick="showAllKeywords()" style="top: 5px; position: absolute; right: 5px;"  id="info-update" class="btn-floating waves-effect waves-light">
                     <i style="padding-top: 3px;" class="mdi-action-info-outline"></i>
                 </a>
                 
-                <a style="padding-top: 8px; padding-left: 11px;" data-transition="slide" href="#all-drugs-page" id="browse" class="btn-floating waves-effect waves-light">
+                <a style="padding-top: 8px; padding-left: 11px;" id="browse" class="btn-floating waves-effect waves-light">
                     <img style="width: 20px" src="img/medical.png">
                 </a>
                 <!-- <h3 id="drug-title">Quick<br/>Patient Counseling</h3> -->
@@ -67,11 +68,11 @@
     <div data-role="page" id="all-drugs-page">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" href="#home-page" class="back-to-main waves-effect waves-light btn btn-left">
+                <a data-transition="slide" data-direction="reverse" id="drugs-to-home" class="back-to-main waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Main
                 </a>
-                <a data-transition="slide" data-direction="reverse" href="#result-page" class="goto-second-search waves-effect waves-light btn btn-right">
+                <a data-transition="slide" data-direction="reverse" id="drugs-to-results" class="goto-second-search waves-effect waves-light btn btn-right">
                     <i class="result-nav-btn left mdi-action-search"></i>
                     Search
                 </a>
@@ -100,7 +101,7 @@
     <div data-role="page" id="about">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" href="#home-page" class="back-to-main back waves-effect waves-light btn btn-left">
+                <a data-transition="slide" data-direction="reverse" id="about-to-home" class="back-to-main back waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
@@ -168,7 +169,7 @@
     <div data-role="page" id="result-page">
         <nav>
             <div class="search-options">
-                <a href="#all-drugs-page" class="search-back waves-effect waves-light btn btn-left">
+                <a id="results-to-drugs" class="search-back waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
@@ -200,7 +201,7 @@
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
-                <a data-transition="slide" href="#result-page" data-direction="reverse" class="goto-second-search waves-effect waves-light btn btn-right" id="drug-page-search">
+                <a data-transition="slide" data-direction="reverse" class="goto-second-search waves-effect waves-light btn btn-right" id="drug-page-search">
                     <i class="result-nav-btn left mdi-action-search"></i>
                     Search
                 </a>

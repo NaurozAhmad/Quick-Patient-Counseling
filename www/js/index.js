@@ -145,6 +145,7 @@ function readFile() {
                 obj = JSON.parse(string);
                 roughObj = JSON.parse(string);
                 obj = sortByKey(obj, 'drug_brand');
+                putDrugs();
             }
         };
         reader.readAsText(file);
@@ -163,23 +164,23 @@ function readUserNotes() {
     }, fail);
 }
 
-function checkForUpdate() {
-    $.ajax({
-        url: "http://rphapps.com/admin/drugs-json.php",
-        method: "GET",
-        dataType: "json",
-    }).done(function (data) {
-        newStuff = data;
-        oldStuff = roughObj;
-        if (JSON.stringify(newStuff) === JSON.stringify(oldStuff)) {
-            Materialize.toast('Local database up to date.', 2000);
-        } else {
-            Materialize.toast('Update available.', 2000);
-        }
-    }).fail(function () {
-        alert("Failed to connect to server. Please check your connection.");
-    });
-}
+// function checkForUpdate() {
+//     $.ajax({
+//         url: "http://rphapps.com/admin/drugs-json.php",
+//         method: "GET",
+//         dataType: "json",
+//     }).done(function (data) {
+//         newStuff = data;
+//         oldStuff = roughObj;
+//         if (JSON.stringify(newStuff) === JSON.stringify(oldStuff)) {
+//             Materialize.toast('Local database up to date.', 2000);
+//         } else {
+//             Materialize.toast('Update available.', 2000);
+//         }
+//     }).fail(function () {
+//         alert("Failed to connect to server. Please check your connection.");
+//     });
+// }
 
 function onDeviceReady() {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dir) {
@@ -328,9 +329,45 @@ $(document).on('pagebeforehide', "#all-drugs-page", function () {
     $('.back').attr('href', '#all-drugs-page');
 });
 
-$(document).on('pageshow', "#about", function () {
-    checkForUpdate();
+//======================================= Redirects ============================================
+
+$('#browse').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#all-drugs-page');
 });
+
+$('#info-update').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#about');
+});
+
+$('#drugs-to-home').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#home-page');
+});
+
+$('#drugs-to-results').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#result-page');
+});
+
+$('#about-to-home').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#home-page');
+});
+
+$('#results-to-drugs').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#all-drugs-page');
+});
+
+$('#drug-page-search').on('touchend', function (e) {
+    e.preventDefault();
+    $.mobile.changePage('#result-page');
+});
+
+
+//================================================= END OF REDIRECTS ==========================
 
 //---- Hard back key pressed function for app exit.
 var pageID = false;     //to check if at home page. for app exit function.
