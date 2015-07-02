@@ -1,4 +1,4 @@
-body.ui-mobile-viewport.ui-overlay-a {
+body {
     background-color: #e3dedb !important;
 }
 #about h6 {
@@ -10,12 +10,25 @@ body.ui-mobile-viewport.ui-overlay-a {
     background-color: #e3dedb;
     background-size: 60px 60px;
 }
+#about-page {
+    background-color: #FFF;
+}
 #result-page {
     background-color: #e3dedb;
 }
 nav {
     background-color: #aa4400;
     height: auto;
+}
+.btn {
+    box-shadow: none;
+    padding-top: 4px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100%;
+}
+.btn:focus, .btn:active {
+    box-shadow: none;
 }
 .nav-bar {
     padding-top: 0;
@@ -290,4 +303,7 @@ i.left {
 }
 .input-field input[type="search"]:focus ~ .search-reset {
     color: #444;
+}
+table.striped > tbody > tr:nth-child(2n+1) {
+    background-color: #FFF2EA;
 }

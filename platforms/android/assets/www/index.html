@@ -14,9 +14,10 @@
 
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="assets/jquery-mobile/jquery.mobile-1.4.5.js"></script>
+<!-- <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile-1.4.5.js"></script> -->
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="js/fastclick.js"></script>
+<script type="text/javascript" src="js/custom-redirects.js"></script>
 </head>
 <body>
     <!-- =================================================== Home Page ======================================= -->
@@ -68,11 +69,11 @@
     <div data-role="page" id="all-drugs-page">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" id="drugs-to-home" class="back-to-main waves-effect waves-light btn btn-left">
+                <a id="drugs-to-home" class="back-to-main waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Main
                 </a>
-                <a data-transition="slide" data-direction="reverse" id="drugs-to-results" class="goto-second-search waves-effect waves-light btn btn-right">
+                <a id="drugs-to-results" class="goto-second-search waves-effect waves-light btn btn-right">
                     <i class="result-nav-btn left mdi-action-search"></i>
                     Search
                 </a>
@@ -98,10 +99,10 @@
 
     <!-- =================================================== About ======================================= -->
 
-    <div data-role="page" id="about">
+    <div data-role="page" id="about-page">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" id="about-to-home" class="back-to-main back waves-effect waves-light btn btn-left">
+                <a id="about-to-home" class="back-to-main back waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
@@ -112,21 +113,14 @@
             <div class="loading" style="width:100%; display: none;" align="center">
                 <img style="width: 40px; height: auto;" src="img/loading.GIF">
             </div>
-            <button id="update-local" class="waves-effect waves-light btn">Update</button>
+            <button id="update-local" class="waves-effect waves-light btn" style="width: 100%">Update</button>
             <h5>
                 About
             </h5>
             <p>This app contains the information of drugs and enables users to make notes on specific drugs.</p>
             <p>Fast searching for finding quick information of any drugs.</p> 
             
-            <div class="container">
-                <table id="keywords-table" class="striped">
-                    <thead style="font-weight: bold">
-                        <td>Keywords</td>
-                        <td>Description</td>
-                    </thead>
-                </table>
-            </div>
+            
             <h5>
                 How to use
             </h5>
@@ -161,6 +155,15 @@
             consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+            <div class="container" style="margin-bottom: 20px;">
+                <table id="keywords-table" class="striped">
+                    <thead style="font-weight: bold">
+                        <td>Keywords</td>
+                        <td>Description</td>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -197,11 +200,11 @@
     <div data-role="page" id="drug-page">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a data-transition="slide" data-direction="reverse" class="back waves-effect waves-light btn btn-left">
+                <a id="single-to-allDrugs" class="back waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
-                <a data-transition="slide" data-direction="reverse" class="goto-second-search waves-effect waves-light btn btn-right" id="drug-page-search">
+                <a id="single-to-search" class="goto-second-search waves-effect waves-light btn btn-right" id="drug-page-search">
                     <i class="result-nav-btn left mdi-action-search"></i>
                     Search
                 </a>
