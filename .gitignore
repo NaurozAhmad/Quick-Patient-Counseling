@@ -13,17 +13,17 @@ platforms/ios/cordova/console.log
 CordovaSource/platforms/ios
 
 # android
-CordovaSource/platforms/android/assets/www
-CordovaSource/platforms/android/bin
-CordovaSource/platforms/android/gen
-CordovaSource/platforms/android/local.properties
-CordovaSource/platforms/android/ant-build
-CordovaSource/platforms/android/ant-gen
-CordovaSource/platforms/android/CordovaLib/ant-build
-CordovaSource/platforms/android/CordovaLib/ant-gen
-CordovaSource/platforms/android/CordovaLib/bin
-CordovaSource/platforms/android/CordovaLib/gen
-CordovaSource/platforms/android/CordovaLib/local.properties
+platforms/android/assets/www
+platforms/android/bin
+platforms/android/gen
+platforms/android/local.properties
+platforms/android/ant-build
+platforms/android/ant-gen
+platforms/android/CordovaLib/ant-build
+platforms/android/CordovaLib/ant-gen
+platforms/android/CordovaLib/bin
+platforms/android/CordovaLib/gen
+platforms/android/CordovaLib/local.properties
 
 # wp8
 CordovaSource/platforms/wp8/bin

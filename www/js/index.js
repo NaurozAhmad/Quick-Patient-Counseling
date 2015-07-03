@@ -18,7 +18,6 @@ var logOb = null,
     nextBatch = 150,
     done = 0,
     whichSearch = 1;
-//============================================ Mutual Functions =================================================
 
 function findByID(id) {
     var deferred = $.Deferred(),
@@ -42,6 +41,8 @@ function sortByKey(array, key) {
     });
 }
 
+
+//=============================================== PUT DRUGS IN ALL DRUGS =========================================
 function putDrugs() {
     $('#all-drugs-list').empty();
 
@@ -89,27 +90,6 @@ function putDrugs() {
     }
 }
 
-var scrolling = false;
-
-$(document).on('touchstart', '.single-object', function() {
-    scrolling = false;
-    $(this).addClass('hovering');
-});
-
-$(document).on('touchmove', '.single-object', function() {
-    scrolling = true;
-    $(this).removeClass('hovering');
-});
-
-$(document).on('touchend', '.single-object', function (event) {
-    event.preventDefault();
-    if (scrolling === false) {
-        var id = $(this).children('.hidden-id').val();
-        onSingleDrug(id);
-        $(this).removeClass('hovering');
-    }
-});
-
 $('.drugsNext').on('click',function (e) {
     e.preventDefault();
     done = nextBatch;
@@ -138,7 +118,28 @@ $('.drugsPrev').on('click',function (e) {
     }
 });
 
-//============================================ End Mutual Functions ==============================================
+//Drug list item tap effect.
+
+var scrolling = false;
+
+$(document).on('touchstart', '.single-object', function() {
+    scrolling = false;
+    $(this).addClass('hovering');
+});
+
+$(document).on('touchmove', '.single-object', function() {
+    scrolling = true;
+    $(this).removeClass('hovering');
+});
+
+$(document).on('touchend', '.single-object', function (event) {
+    event.preventDefault();
+    if (scrolling === false) {
+        var id = $(this).children('.hidden-id').val();
+        onSingleDrug(id);
+        $(this).removeClass('hovering');
+    }
+});
 
 //================================================ File Function =================================================
 
@@ -200,6 +201,9 @@ function readUserNotes() {
 //     });
 // }
 
+
+//======================================== DEVICE READY =========================
+
 function onDeviceReady() {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dir) {
         dir.getFile("log.txt", {create: true}, function (file) {
@@ -221,6 +225,14 @@ function onDeviceReady() {
         pSearch.focus();
     }, 100);
 }
+
+$(document).ready(function () {
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    } else {
+        onDeviceReady();
+    }
+});
 
 //==================================== Custom Redirects ========================
 
@@ -275,13 +287,7 @@ $('#single-to-search').on('click', function(e) {
     whichSearch = 2;
 });
 
-$(document).ready(function () {
-    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-        document.addEventListener("deviceready", onDeviceReady, false);
-    } else {
-        onDeviceReady();
-    }
-});
+//==================================================== UPDATE LOCAL FILES
 
 function writeStuff(str) {
     if (!logOb) {
@@ -305,30 +311,20 @@ function update() {
         stuff = data;
         writeStuff(stuff);
         readFile();
-        $('#update-message').text('Local files updated. Press below button to refresh drugs list.');
-        $('#reload-local').css('display', 'block');
-        $('#update-local').css('display', 'none');
+        $('#update-comp-modal').openModal();
+        $('#update-message').text('Local database updated. Refresh local files.');
+        $('#reload-local').css('display', 'block')
         $('.loading').css('display', 'none');
-        reloaded = 1;
     }).fail(function () {
         alert("Failed to connect to server. Please check your connection.");
         $('.loading').css('display', 'none');
     });
 }
 
-$(document).on('click', '.update-redo', function () {
-    readFile();
-});
-
-//================================================= End File Function ================================================
-
-//================================================= App functionality ================================================
-
 $('#update-local').on('touchend', function (event) {
     event.preventDefault();
     $('.loading').css('display', 'block');
     update();
-
 });
 
 $('#reload-local').on('touchend', function (event) {
@@ -340,12 +336,12 @@ $('#reload-local').on('touchend', function (event) {
     $('#reload-index').css('display', 'block');
 });
 $('#reload-index').on('touchend', function (event) {
-    event.preventDefault();
     $('#update-message').text('');
     readFile();
     showAllKeywords();
     $('#reload-index').css('display', 'none');
-    $('#update-local').css('display', 'block');
+    $('#reload-local').css('display', 'none');
+    $('#update-comp-modal').closeModal();
 });
 //==========================================when open a single drug details page.===================================
 function onSingleDrug(id) {

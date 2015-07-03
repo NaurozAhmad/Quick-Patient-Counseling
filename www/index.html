@@ -114,14 +114,8 @@
             <div class="loading" style="width:100%; display: none;" align="center">
                 <img style="width: 40px; height: auto;" src="img/loading.GIF">
             </div>
-            <p id="update-message"></p>
             <button id="update-local" class="waves-effect waves-light btn" style="width: 100%">Update</button>
-            <button id="reload-local" class="waves-effect waves-light btn" style="text-align: center; display: none; ">
-            	Refresh
-            </button>
-            <button id="reload-index" class="waves-effect waves-light btn" style="text-align: center; display: none; ">
-            	Refresh
-            </button>
+            
             <h5>
                 About
             </h5>
@@ -267,10 +261,15 @@
     <div id="update-comp-modal" class="modal">
         <div class="modal-content">
             <div style="width:100%; display: block;" align="center">
-                <p>Local database updated.</p>
+                <p id="update-message">Local database updated.</p>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-action update-redo modal-close waves-effect waves-green btn-flat">OK</a>
+                <a href="#!" id="reload-local" class="waves-effect waves-light btn btn-flat" style=" display: none; ">
+                    Refresh Files
+                </a href="#!">
+                <a href="#!" id="reload-index" class="waves-effect waves-light btn btn-flat" style=" display: none; ">
+                    Refresh Index
+                </a href="#!">
             </div>
         </div>
     </div>
