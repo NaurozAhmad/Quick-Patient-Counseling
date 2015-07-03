@@ -36,7 +36,6 @@ nav {
 .btn-left {
     float: left;
     margin-left: 4px;
-    margin-bottom: 4px;
 }
 .btn-right {
     float: right;
@@ -198,6 +197,9 @@ i.left {
     line-height: 25px;
     padding-top: 10px;
     padding-bottom: 17px;
+    padding-left: 4rem;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 #keywords li {
     display: inline-block;
@@ -290,6 +292,7 @@ i.left {
 }
 .search-back {
     float: left;
+    margin-bottom: 0px;
 }
 .search-back:hover, .search-back:focus, .search-back:active {
     color: #fff;
@@ -306,4 +309,9 @@ i.left {
 }
 table.striped > tbody > tr:nth-child(2n+1) {
     background-color: #FFF2EA;
+}
+#pages-list a {
+    margin: 12px;
+    text-align: center;
+    font-size: 1rem;
 }

@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<meta name="format-detection" content="telephone=no" />
-<meta name="msapplication-tap-highlight" content="no" />
-<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-<link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile-1.4.5.css">
-<link rel="stylesheet" type="text/css" href="assets/jquery-theme/no-shadow.css">
-<link rel="stylesheet" type="text/css" href="assets/materialize/css/materialize.min.css">
-<link rel="stylesheet" type="text/css" href="css/custom.css" />
-<title>Quick Patient Counseling</title>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile-1.4.5.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery-theme/no-shadow.css">
+    <link rel="stylesheet" type="text/css" href="assets/materialize/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <title>Quick Patient Counseling</title>
 
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/jquery.js"></script>
-<!-- <script type="text/javascript" src="assets/jquery-mobile/jquery.mobile-1.4.5.js"></script> -->
-<script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
-<script type="text/javascript" src="js/fastclick.js"></script>
-<script type="text/javascript" src="js/custom-redirects.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/fastclick.js"></script>
 </head>
 <body>
     <!-- =================================================== Home Page ======================================= -->
@@ -79,6 +77,9 @@
                 </a>
             </div>
         </nav>
+        <!-- <div align="center" style="margin: 10px 0;"><a href="#" id="pages-toggle" class="btn waves-effect waves-light">Page List</a></div>
+        <div id="pages-list" align="center" class="container" style="display: none">
+        </div> -->
         <div>
             <ul class="collection" id="all-drugs-list">
 
@@ -113,7 +114,14 @@
             <div class="loading" style="width:100%; display: none;" align="center">
                 <img style="width: 40px; height: auto;" src="img/loading.GIF">
             </div>
+            <p id="update-message"></p>
             <button id="update-local" class="waves-effect waves-light btn" style="width: 100%">Update</button>
+            <button id="reload-local" class="waves-effect waves-light btn" style="text-align: center; display: none; ">
+            	Refresh
+            </button>
+            <button id="reload-index" class="waves-effect waves-light btn" style="text-align: center; display: none; ">
+            	Refresh
+            </button>
             <h5>
                 About
             </h5>
@@ -156,11 +164,9 @@
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-            <div class="container" style="margin-bottom: 20px;">
+            <div class="container" style="padding-bottom: 20px;">
                 <table id="keywords-table" class="striped">
                     <thead style="font-weight: bold">
-                        <td>Keywords</td>
-                        <td>Description</td>
                     </thead>
                 </table>
             </div>
@@ -258,25 +264,28 @@
         </div>
     </div>
 
-    <div id="update-modal" class="modal">
-        <div class="modal-content">
-            <div class="loading" style="width:100%; display: block;" align="center">
-                <img style="width: 40px; height: auto;" src="img/loading.GIF">
-            </div>
-            <p>Downloading local database for the first time.</p>
-        </div>
-    </div>
-
     <div id="update-comp-modal" class="modal">
         <div class="modal-content">
             <div style="width:100%; display: block;" align="center">
                 <p>Local database updated.</p>
             </div>
             <div class="modal-footer">
-                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+                <a href="#!" class="modal-action update-redo modal-close waves-effect waves-green btn-flat">OK</a>
             </div>
         </div>
+    </div>
 
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
-    </html>
+    <!-- <div id="list-all-pages-modal" class="modal">
+        <div class="modal-content" style="padding-bottom: 10px; padding-top: 10px;">
+            <h5 id="modal-heading">Jump to Page</h5>
+            <div id="pages-list" align="center">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="notes-cancel" class=" modal-action modal-close waves-effect waves-green btn-flat left">Cancel</a>
+        </div>
+    </div> -->
+
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
