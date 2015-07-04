@@ -1,20 +1,15 @@
 body {
-    background-color: #e3dedb !important;
+    background-color: #e3dedb;
 }
 #about h6 {
     font-size: 16px;
     font-weight: bold;
 }
-#home-page {
-    /*background: url(../img/back.png);*/
+#home-page, #result-page {
     background-color: #e3dedb;
-    background-size: 60px 60px;
 }
-#about-page {
+#about-page, #all-drugs-page {
     background-color: #FFF;
-}
-#result-page {
-    background-color: #e3dedb;
 }
 nav {
     background-color: #aa4400;
@@ -111,9 +106,9 @@ nav .nav-wrapper i {
     display: block;
     width: 100%;
 }
-.result-link span {
+/*.result-link span {
     text-transform: uppercase;
-}
+}*/
 .result-link p {
     margin: 0;
 }
@@ -122,7 +117,8 @@ nav .nav-wrapper i {
 }
 .title-name {
     font-size: 14px;
-    text-transform: lowercase !important;
+    font-weight: normal !important;
+    text-transform: capitalize;
 }
 textarea.materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid #aa4400;
@@ -186,13 +182,13 @@ i.left {
 .search-btn {
     width: 100%;
     background-color: #aa4400;
-}
+}/*
 #s-drug-brand {
     text-transform: uppercase;
 }
 #s-drug-name {
     text-transform: lowercase;
-}
+}*/
 .input-field input[type="search"] {
     line-height: 25px;
     padding-top: 10px;
@@ -314,4 +310,15 @@ table.striped > tbody > tr:nth-child(2n+1) {
     margin: 12px;
     text-align: center;
     font-size: 1rem;
+}
+.drugs-nav {
+    display: block;
+    padding: .5rem 0;
+    min-height: 3rem;
+}
+.drugs-nav .btn-floating {
+    padding-top: 1px;
+}
+.current-drugs {
+    line-height: 44px;
 }

@@ -26,12 +26,12 @@
                     <i style="padding-top: 3px;" class="mdi-action-info-outline"></i>
                 </a>
                 
-                <a style="padding-top: 8px; padding-left: 11px;" id="browse" class="btn-floating waves-effect waves-light">
+                <a style="padding-top: 9px; padding-left: 11px;" id="browse" class="btn-floating waves-effect waves-light">
                     <img style="width: 20px" src="img/medical.png">
                 </a>
                 <!-- <h3 id="drug-title">Quick<br/>Patient Counseling</h3> -->
                 <div id="drug-title" style="width: 300px; height: auto; margin-left: auto; margin-right: auto;">
-                    <img style="width:100%;" src="img/qpc-banner.png">
+                    <img style="width:100%;" src="img/qpc-banner-transparent.png">
                 </div>
             </div>
         </div>
@@ -77,21 +77,25 @@
                 </a>
             </div>
         </nav>
-        <!-- <div align="center" style="margin: 10px 0;"><a href="#" id="pages-toggle" class="btn waves-effect waves-light">Page List</a></div>
-        <div id="pages-list" align="center" class="container" style="display: none">
-        </div> -->
+        <div class="drugs-nav" align="center">
+            <a href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
+                <i class="mdi-navigation-chevron-left"></i>
+            </a>
+            <span class="current-drugs"></span>
+            <a href="#" class="btn-floating waves-effect waves-light drugsNext btn-right">
+                <i class="mdi-navigation-chevron-right"></i>
+            </a>
+        </div>
         <div>
             <ul class="collection" id="all-drugs-list">
 
             </ul>
         </div>
-        <div align="center">
-            <!--<a href="#" class="btn btn-left waves-light waves-effect drugsPrev">Back</a>-->
+        <div class="drugs-nav" align="center">
             <a href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
                 <i class="mdi-navigation-chevron-left"></i>
             </a>
             <span class="current-drugs"></span>
-            <!--<a href="#" class="btn btn-right waves-light waves-effect drugsNext">Next</a>-->
             <a href="#" class="btn-floating waves-effect waves-light drugsNext btn-right">
                 <i class="mdi-navigation-chevron-right"></i>
             </a>
@@ -114,14 +118,8 @@
             <div class="loading" style="width:100%; display: none;" align="center">
                 <img style="width: 40px; height: auto;" src="img/loading.GIF">
             </div>
-            <p id="update-message"></p>
             <button id="update-local" class="waves-effect waves-light btn" style="width: 100%">Update</button>
-            <button id="reload-local" class="waves-effect waves-light btn" style="text-align: center; display: none; ">
-            	Refresh
-            </button>
-            <button id="reload-index" class="waves-effect waves-light btn" style="text-align: center; display: none; ">
-            	Refresh
-            </button>
+            
             <h5>
                 About
             </h5>
@@ -206,7 +204,7 @@
     <div data-role="page" id="drug-page">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
-                <a id="single-to-allDrugs" class="back waves-effect waves-light btn btn-left">
+                <a id="single-to-back" class="back waves-effect waves-light btn btn-left">
                     <i class="result-nav-btn left mdi-image-navigate-before"></i> 
                     Back
                 </a>
@@ -222,16 +220,16 @@
             <ul class="collection">
                 <li class="collection-item">
                     <span style="font-weight: bold; font-size: 1.4rem;">
-                        <span id="s-drug-brand"></span>
+                        <span id="s-drug-name" style="text-transform: capitalize"></span>
                         <input type="hidden" id="s-drug-id">
-                        <span id="s-drug-name" class="title-name"></span>
+                        <span id="s-drug-brand" style="text-transform: capitalize" class="title-name"></span>
                     </span>
                 </li>
                 <li class="collection-item stripy"><span class="attrib">Food</span><span id="s-food"></span></li>
                 <li class="collection-item"><span class="attrib">Sedation</span><span id="s-sedation"></span></li>
                 <li class="collection-item stripy"><span class="attrib">Preg/Lact</span><span id="s-preg"></span></li>
                 <li class="collection-item"><span class="attrib">Maj.SEs</span><span id="s-maj"></span></li>
-                <li class="collection-item stripy"><span class="attrib">Caution/Cont. Ind.</span><span id="s-caution"></span></li>
+                <li class="collection-item stripy"><span class="attrib">Caution/XI</span><span id="s-caution"></span></li>
                 <li class="collection-item"><span class="attrib">BBW</span><span id="s-bbw"></span></li>
             </ul>
             <div class="container">
@@ -252,13 +250,13 @@
     <!-- =================================================== Modals ======================================= -->
 
     <div id="notes-modal" class="modal">
-        <div class="modal-content" style="padding-bottom: 10px; padding-top: 10px;">
-            <h5 id="modal-heading">Make your notes</h5>
+        <div class="modal-content" style="padding-bottom: 4px; padding-top: 4px;">
+            <h5 id="modal-heading" style="margin-top: 6px;">Add Your Notes</h5>
             <div class="input-field">
-                <textarea id="notes" class="materialize-textarea" data-role="none" cols="30" rows="10" style="padding-top: 10px; padding-bottom: 10px;"></textarea>
+                <textarea id="notes" class="materialize-textarea" data-role="none" cols="30" rows="10" style="padding-top: 6px; padding-bottom: 2x; margin-bottom: 0px;"></textarea>
             </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="padding: 0 6px;">
             <a href="#!" id="notes-save" class=" modal-action waves-effect waves-green btn-flat">Save</a>
             <a href="#!" id="notes-cancel" class=" modal-action modal-close waves-effect waves-green btn-flat left">Cancel</a>
         </div>
@@ -267,24 +265,18 @@
     <div id="update-comp-modal" class="modal">
         <div class="modal-content">
             <div style="width:100%; display: block;" align="center">
-                <p>Local database updated.</p>
+                <p id="update-message">Local database updated.</p>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-action update-redo modal-close waves-effect waves-green btn-flat">OK</a>
+                <a href="#!" id="reload-local" class="waves-effect waves-light btn btn-flat" style=" display: none; ">
+                    Refresh Files
+                </a href="#!">
+                <a href="#!" id="reload-index" class="waves-effect waves-light btn btn-flat" style=" display: none; ">
+                    Refresh Index
+                </a href="#!">
             </div>
         </div>
     </div>
-
-    <!-- <div id="list-all-pages-modal" class="modal">
-        <div class="modal-content" style="padding-bottom: 10px; padding-top: 10px;">
-            <h5 id="modal-heading">Jump to Page</h5>
-            <div id="pages-list" align="center">
-            </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" id="notes-cancel" class=" modal-action modal-close waves-effect waves-green btn-flat left">Cancel</a>
-        </div>
-    </div> -->
 
     <script type="text/javascript" src="js/index.js"></script>
 </body>

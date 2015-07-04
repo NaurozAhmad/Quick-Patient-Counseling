@@ -62,9 +62,9 @@ function putDrugs() {
                     object = obj[i]; 
                     $('#all-drugs-list').append('<li class="collection-item single-object">' + '<input class="hidden-id" type="hidden" value= "' + object.drug_id + '">' +
                         '<a class="result-link" rel="external">' +
-                        '<span  style="font-weight: bold">' + object.drug_brand +
-                        ' <span style="font-weight: normal !important;"  class="title-name">(' +
-                        object.drug_name + ')</span></span></a></li>');
+                        '<span style="font-weight: bold; text-transform: capitalize;">' + object.drug_name +
+                        ' <span class="title-name">(' +
+                        object.drug_brand + ')</span></span></a></li>');
                 }
                 else {
                     break;
@@ -92,29 +92,33 @@ function putDrugs() {
 
 $('.drugsNext').on('click',function (e) {
     e.preventDefault();
-    done = nextBatch;
-    if (done > 0) {
-        $('.drugsPrev').removeClass('disabled');
-        nextBatch = nextBatch + 150;
-        putDrugs();
-        window.scrollTo(0,0);
-    }
-    if (nextBatch >= obj.length) {
-        $('.drugsNext').addClass('disabled');
+    if(!$('.drugsNext').hasClass('disabled')) {
+        done = nextBatch;
+        if (done > 0) {
+            $('.drugsPrev').removeClass('disabled');
+            nextBatch = nextBatch + 150;
+            putDrugs();
+            window.scrollTo(0,0);
+        }
+        if (nextBatch >= obj.length) {
+            $('.drugsNext').addClass('disabled');
+        }
     }
 });
 
 $('.drugsPrev').on('click',function (e) {
     e.preventDefault();
-    done = done - 150;
-    nextBatch = nextBatch - 150;
-    putDrugs();
-    window.scrollTo(0,0);
-    if (done <= 0) {
-        $('.drugsPrev').addClass('disabled');
-    }
-    if (nextBatch < obj.length) {
-        $('.drugsNext').removeClass('disabled');
+    if(!$('.drugsPrev').hasClass('disabled')) {
+        done = done - 150;
+        nextBatch = nextBatch - 150;
+        putDrugs();
+        window.scrollTo(0,0);
+        if (done <= 0) {
+            $('.drugsPrev').addClass('disabled');
+        }
+        if (nextBatch < obj.length) {
+            $('.drugsNext').removeClass('disabled');
+        }
     }
 });
 
@@ -163,7 +167,7 @@ function readFile() {
             } else {
                 obj = JSON.parse(string);
                 roughObj = JSON.parse(string);
-                obj = sortByKey(obj, 'drug_brand');
+                obj = sortByKey(obj, 'drug_name');
                 putDrugs();
             }
         };
@@ -243,9 +247,13 @@ $('#info-update').on('click', function(e) {
     whichSearch = 0;
 });
 $('#browse').on('click', function(e) {
+    nextBatch = 150;
+    done = 0;
+    putDrugs();
     $('#home-page').css('display', 'none');
     $('#all-drugs-page').css('display', 'block');
     resetPrimarySearch();
+    $('body').css('background-color', '#FFF');
     whichSearch = 0;
 });
 $('#drugs-to-home').on('click', function(e) {
@@ -253,6 +261,7 @@ $('#drugs-to-home').on('click', function(e) {
     $('#home-page').css('display', 'block');
     pSearch.focus();
     whichSearch = 1;
+    $('body').css('background-color', '#e3dedb');
     resetPrimarySearch();
 });
 $('#drugs-to-results').on('click', function(e) {
@@ -262,10 +271,12 @@ $('#drugs-to-results').on('click', function(e) {
     sSearch.val('');
     $('#search-result').empty();
     whichSearch = 2;
+    $('body').css('background-color', '#e3dedb');
 });
 $('#about-to-home').on('click', function(e) {
     $('#about-page').css('display', 'none');
     $('#home-page').css('display', 'block');
+    $('body').css('background-color', '#e3dedb');
     pSearch.focus();
     whichSearch = 1;
 });
@@ -275,16 +286,30 @@ $('#results-to-drugs').on('click', function(e) {
     sSearch.val('');
     whichSearch = 0;
 });
-$('#single-to-allDrugs').on('click', function(e) {
-    $('#drug-page').css('display', 'none');
-    $('#all-drugs-page').css('display', 'block');
-    whichSearch = 0;
+$('#single-to-back').on('click', function(e) {
+    if (whichSearch === 0) {
+        $('#drug-page').css('display', 'none');
+        $('#all-drugs-page').css('display', 'block');
+    }
+    if (whichSearch === 1) {
+        $('#drug-page').css('display', 'none');
+        $('#home-page').css('display', 'block');
+        $('body').css('background-color', '#e3dedb');
+        pSearch.focus();
+    }
+    if (whichSearch === 2) {
+        $('#drug-page').css('display', 'none');
+        $('#result-page').css('display', 'block');
+        $('body').css('background-color', '#e3dedb');
+        sSearch.focus();
+    }
 });
 $('#single-to-search').on('click', function(e) {
     $('#drug-page').css('display', 'none');
     $('#result-page').css('display', 'block');
     sSearch.focus();
     whichSearch = 2;
+    $('body').css('background-color', '#e3dedb');
 });
 
 //==================================================== UPDATE LOCAL FILES
@@ -351,12 +376,13 @@ function onSingleDrug(id) {
         $('#home-page').css('display', 'none');
         $('#result-page').css('display', 'none');
         $('#drug-page').css('display', 'block')
+        $('body').css('background-color', '#FFF');
         sSearch.blur();
         pSearch.blur();
         
         $('#keywords').empty();
-        $('#s-drug-brand').text(object.drug_brand);
-        $('#s-drug-name').text('(' + object.drug_name + ')');
+        $('#s-drug-name').text(object.drug_name);
+        $('#s-drug-brand').text('(' + object.drug_brand + ')');
         $('#s-food').text((object.food !== "") ? object.food : ' - ');
         $('#s-sedation').text((object.sedation !== "") ? object.sedation : ' - ');
         $('#s-preg').text((object.preg_lact !== "") ? object.preg_lact : ' - ');
@@ -571,19 +597,21 @@ function doUnifiedSearch(typed, container) {
             for (var i = 0; i < 50; i++) {
                 var objectBrand = results[i].drug_brand.toLowerCase();
                 var objectName = results[i].drug_name.toLowerCase();
-                if (objectBrand.indexOf(typed) == 0) {
-                    $(container).append('<li class="collection-item single-object">' + '<input class="hidden-id" type="hidden" value= "' + results[i].drug_id + '">' +
+                if (objectName.indexOf(typed) == 0) {
+                    $(container).append('<li class="collection-item single-object">' +
+                        '<input class="hidden-id" type="hidden" value= "' + results[i].drug_id + '">' +
                         '<a class="result-link" rel="external">' +
-                        '<span>' + '<span style="font-weight: 900">' + typed + '</span>' + objectBrand.replace(typed, "") +
+                        '<span>' + '<span style="font-weight: 900">' + typed + '</span>' + objectName.replace(typed, "") +
                         ' <span class="title-name">(' +
-                        objectName + ')</span></span></a></li>');
+                        objectBrand + ')</span></span></a></li>');
                 }
-                else if (objectName.indexOf(typed) == 0) {
-                    $(container).append('<li class="collection-item single-object">'  + '<input class="hidden-id" type="hidden" value= "' + results[i].drug_id + '">' +
+                else if (objectBrand.indexOf(typed) == 0) {
+                    $(container).append('<li class="collection-item single-object">'  +
+                        '<input class="hidden-id" type="hidden" value= "' + results[i].drug_id + '">' +
                         '<a class="result-link" rel="external">' +
-                        '<span>' + objectBrand +
-                        ' <span class="title-name">(' + '<span style="font-weight: 900; text-transform: lowercase">' + typed + '</span>' + 
-                        objectName.replace(typed, "")  + ')</span></span></a></li>');
+                        '<span>' + objectName +
+                        ' <span class="title-name">(' + '<span style="font-weight: 900;">' + typed + '</span>' + 
+                        objectBrand.replace(typed, "")  + ')</span></span></a></li>');
                 }
             }
         }

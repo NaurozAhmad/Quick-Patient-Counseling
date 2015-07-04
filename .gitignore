@@ -13,9 +13,9 @@ platforms/ios/cordova/console.log
 CordovaSource/platforms/ios
 
 # android
-platforms/android/assets/www
-platforms/android/bin
-platforms/android/gen
+/platforms/android/assets/www/*.html
+platforms/android/bin/**
+platforms/android/gen/**
 platforms/android/local.properties
 platforms/android/ant-build
 platforms/android/ant-gen
@@ -35,3 +35,7 @@ CordovaSource/platforms/wp8/*.csproj.user
 
 # res
 resources/signin
+platforms/android/assets/www/css/*.css
+platforms/android/assets/www/js/index.js
+platforms/android/assets/www/js/index.js
+platforms/android/assets/www/index.html
