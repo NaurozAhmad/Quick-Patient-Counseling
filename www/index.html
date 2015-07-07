@@ -22,12 +22,13 @@
     <div data-role="page" id="home-page">
         <div id="main-stuff">
             <div>
-                <a onclick="showAllKeywords()" style="top: 5px; position: absolute; right: 5px;"  id="info-update" class="btn-floating waves-effect waves-light">
-                    <i style="padding-top: 3px;" class="mdi-action-info-outline"></i>
+                <a onclick="showAllKeywords()" style="top: 12px; position: absolute; right: 10px;"  id="info-update">
+                    <!-- <i style="padding-top: 3px;" class="mdi-action-info-outline"></i> -->
+                    <img class="icon-img" src="img/info.png">
                 </a>
                 
-                <a style="padding-top: 9px; padding-left: 11px;" id="browse" class="btn-floating waves-effect waves-light">
-                    <img style="width: 20px" src="img/medical.png">
+                <a style="padding-top: 9px; padding-left: 11px;" id="browse">
+                    <img class="icon-img" src="img/all-drugs.png">
                 </a>
                 <!-- <h3 id="drug-title">Quick<br/>Patient Counseling</h3> -->
                 <div id="drug-title" style="max-width: 300px; height: auto; margin-left: auto; margin-right: auto;">
@@ -78,12 +79,14 @@
             </div>
         </nav>
         <div class="drugs-nav" align="center">
-            <a href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
+            <a style="margin-left: 4px" href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
                 <i class="mdi-navigation-chevron-left"></i>
+                <!-- <img class="icon-img" style="arrow-back" style="transform: rotate(180deg);" src="img/arrow.png"> -->
             </a>
             <span class="current-drugs"></span>
             <a href="#" class="btn-floating waves-effect waves-light drugsNext btn-right">
                 <i class="mdi-navigation-chevron-right"></i>
+                <!-- <img class="icon-img" src="img/arrow.png"> -->
             </a>
         </div>
         <div>
@@ -92,7 +95,7 @@
             </ul>
         </div>
         <div class="drugs-nav" align="center">
-            <a href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
+            <a style="margin-left: 4px" href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
                 <i class="mdi-navigation-chevron-left"></i>
             </a>
             <span class="current-drugs"></span>
@@ -241,8 +244,14 @@
                 </p>
                 <h5 class="drug-heading">User Notes</h5>
                 <p id="s-notes"></p>
-                <a class="add-notes note-new btn-floating waves-effect waves-light"><i class="mdi-content-add"></i></a>
-                <a style="display: none;" class="add-notes note-edit btn-floating waves-effect waves-light"><i class="mdi-editor-mode-edit"></i></a>
+                <a class="add-notes note-new">
+                    <!-- <i class="mdi-content-add"></i> -->
+                    <img class="icon-img" src="img/add-notes.png">
+                </a>
+                <a style="display: none;" class="add-notes note-edit">
+                    <!-- <i class="mdi-editor-mode-edit"></i> -->
+                    <img class="icon-img" src="img/edit-notes.png">
+                </a>
             </div>
         </div>
     </div>

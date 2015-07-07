@@ -59,9 +59,10 @@ function putDrugs() {
             for (var i = done; i < nextBatch; i++) {
                 if (i < obj.length) {
                     object = obj[i]; 
-                    $('#all-drugs-list').append('<li class="collection-item single-object">' + '<input class="hidden-id" type="hidden" value= "' + object.drug_id + '">' +
+                    $('#all-drugs-list').append('<li class="collection-item single-object">' +
+                        '<input class="hidden-id" type="hidden" value= "' + object.drug_id + '">' +
                         '<a class="result-link" rel="external">' +
-                        '<span style="font-weight: bold; text-transform: capitalize;">' + object.drug_name +
+                        '<span style="text-transform: capitalize;">' + object.drug_name +
                         ' <span class="title-name">(' +
                         object.drug_brand + ')</span></span></a></li>');
                 }
@@ -226,9 +227,6 @@ function onDeviceReady() {
     $('#drug-page').css('display', 'none');
     setTimeout(function() {
         pSearch.focus();
-        setTimeout(function() {
-            navigator.splashscreen.hide();
-        }, 200);
     }, 100);
     
 }
@@ -619,7 +617,7 @@ function doUnifiedSearch(typed, container) {
             for (var i = 0; i < 50; i++) {
                 var objectBrand = results[i].drug_brand.toLowerCase();
                 var objectName = results[i].drug_name.toLowerCase();
-                if (objectName.indexOf(typed) == 0) {
+                /*if (objectName.indexOf(typed) == 0) {
                     $(container).append('<li class="collection-item single-object">' +
                         '<input class="hidden-id" type="hidden" value= "' + results[i].drug_id + '">' +
                         '<a class="result-link" rel="external">' +
@@ -634,7 +632,13 @@ function doUnifiedSearch(typed, container) {
                         '<span>' + objectName +
                         ' <span class="title-name">(' + '<span style="font-weight: 900;">' + typed + '</span>' + 
                         objectBrand.replace(typed, "")  + ')</span></span></a></li>');
-                }
+                }*/
+                $(container).append('<li class="collection-item single-object">'  +
+                    '<input class="hidden-id" type="hidden" value= "' + results[i].drug_id + '">' +
+                    '<a class="result-link" rel="external">' +
+                    '<span style="text-transform: capitalize;">' + objectName +
+                    ' <span class="title-name">(' + 
+                    objectBrand  + ')</span></span></a></li>');
             }
         }
         else {
