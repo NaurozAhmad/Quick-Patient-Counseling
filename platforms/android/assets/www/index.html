@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 , target-densitydpi=device-dpi-->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
     <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile-1.4.5.css">
     <link rel="stylesheet" type="text/css" href="assets/jquery-theme/no-shadow.css">
     <link rel="stylesheet" type="text/css" href="assets/materialize/css/materialize.min.css">
@@ -30,7 +30,7 @@
                     <img style="width: 20px" src="img/medical.png">
                 </a>
                 <!-- <h3 id="drug-title">Quick<br/>Patient Counseling</h3> -->
-                <div id="drug-title" style="width: 300px; height: auto; margin-left: auto; margin-right: auto;">
+                <div id="drug-title" style="max-width: 300px; height: auto; margin-left: auto; margin-right: auto;">
                     <img style="width:100%;" src="img/qpc-banner-transparent.png">
                 </div>
             </div>
@@ -42,7 +42,7 @@
                     Back
                 </a>
             </div>
-            <div class="nav-wrapper">
+            <div class="nav-wrapper search-wrapper">
                 <form>
                     <div class="input-field">
                         <input onchange="searchMain()" data-role="none" class="search search-key" id="main-search" autofocus type="search">
@@ -64,7 +64,7 @@
 
     <!-- =================================================== All Drugs ======================================= -->
 
-    <div data-role="page" id="all-drugs-page">
+    <div data-role="page" id="all-drugs-page" style="display: none;">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
                 <a id="drugs-to-home" class="back-to-main waves-effect waves-light btn btn-left">
@@ -104,7 +104,7 @@
 
     <!-- =================================================== About ======================================= -->
 
-    <div data-role="page" id="about-page">
+    <div data-role="page" id="about-page" style="display: none">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
                 <a id="about-to-home" class="back-to-main back waves-effect waves-light btn btn-left">
@@ -173,7 +173,7 @@
 
     <!-- =================================================== Result ======================================= -->
 
-    <div data-role="page" id="result-page">
+    <div data-role="page" id="result-page" style="display: none">
         <nav>
             <div class="search-options">
                 <a id="results-to-drugs" class="search-back waves-effect waves-light btn btn-left">
@@ -181,7 +181,7 @@
                     Back
                 </a>
             </div>
-            <div class="nav-wrapper">
+            <div class="nav-wrapper search-wrapper">
                 <form>
                     <div class="input-field">
                         <input onchange="searchSecond()" class="search search-key" id="search-key" type="search" autofocus data-role="none">
@@ -201,7 +201,7 @@
 
     <!-- =================================================== Single Drug ======================================= -->
 
-    <div data-role="page" id="drug-page">
+    <div data-role="page" id="drug-page" style="display: none">
         <nav class="nav-bar">
             <div class="nav-wrapper" style="height: 44px;">
                 <a id="single-to-back" class="back waves-effect waves-light btn btn-left">
@@ -269,10 +269,10 @@
             </div>
             <div class="modal-footer">
                 <a href="#!" id="reload-local" class="waves-effect waves-light btn btn-flat" style=" display: none; ">
-                    Refresh Files
+                    Next
                 </a href="#!">
                 <a href="#!" id="reload-index" class="waves-effect waves-light btn btn-flat" style=" display: none; ">
-                    Refresh Index
+                    Next
                 </a href="#!">
             </div>
         </div>

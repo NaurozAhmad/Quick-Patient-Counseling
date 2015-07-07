@@ -1,3 +1,8 @@
+/* COLORS:
+Body Background: #e3dedb;
+Navbar, Buttons Background: #aa4400;
+Table Alternative Stripes: #FFF2EA;
+*/
 body {
     background-color: #e3dedb;
 }
@@ -143,6 +148,7 @@ i.left {
 .logo-heading {
     text-align: center;
     color: #aa4400;
+    overflow: hidden;
 }
 .search-type.right {
     float: right;
@@ -244,25 +250,6 @@ i.left {
     bottom: 60px;
     background: #000;
 }
-.switch label .lever {
-    background-color: #c8beb7;
-    margin: 0 8px;
-}
-.switch label {
-    margin-bottom: 0 !important;
-}
-.switch label .lever::after {
-    background-color: #F29158;
-}
-.switch label input[type="checkbox"]:checked + .lever {
-    background-color: #c8beb7;
-}
-.switch label input[type="checkbox"]:checked + .lever::after {
-    background-color: #F29158;
-}
-.switch {
-    position: relative;
-}
 #main-stuff .btn-floating {
     width: 42px;
     height: 42px;
@@ -281,10 +268,13 @@ i.left {
     background-color: #aa4400;
 }
 .single-object.hovering {
-    background-color: #EAEAEA;
+    background-color: #FFF2EA;
 }
 .single-object:focus {
     background-color: #FFF;
+}
+.single-object span {
+    text-transform: capitalize;
 }
 .search-back {
     float: left;
@@ -321,4 +311,10 @@ table.striped > tbody > tr:nth-child(2n+1) {
 }
 .current-drugs {
     line-height: 44px;
+}
+.search-wrapper {
+    background-color: #FFFFFF;
+}
+.search-wrapper .mdi-action-search {
+    color: #aa4400;
 }
