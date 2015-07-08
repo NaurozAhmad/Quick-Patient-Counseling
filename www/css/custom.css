@@ -12,6 +12,11 @@ body {
 }
 #home-page, #result-page {
     background-color: #e3dedb;
+    overflow: hidden;
+}
+#home-page div, #home-page a, #home-page img, #home-page nav,
+#home-page i, #home-page form, #home-page input, #home-page label, #home-page span {
+    overflow: hidden !important;
 }
 #about-page, #all-drugs-page {
     background-color: #FFF;
@@ -192,13 +197,7 @@ i.left {
 .search-btn {
     width: 100%;
     background-color: #aa4400;
-}/*
-#s-drug-brand {
-    text-transform: uppercase;
 }
-#s-drug-name {
-    text-transform: lowercase;
-}*/
 .input-field input[type="search"] {
     line-height: 25px;
     padding-top: 10px;
@@ -206,6 +205,7 @@ i.left {
     padding-left: 4rem;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    overflow: hidden;
 }
 #keywords li {
     display: inline-block;
@@ -214,7 +214,7 @@ i.left {
     border: none;
     background-color: #aa4400;
     color: #FFF;
-    margin: 0 4px;
+    margin: 6px 6px;
 }
 
 @media all and (orientation: landscape) {
@@ -231,7 +231,6 @@ i.left {
 .popup-trigger {
     position: relative;
     z-index: 100;
-    padding: 4px;
     display: inline-block;
 }
 .overlay {
@@ -245,14 +244,27 @@ i.left {
 }
 .popup {
     display: none;
-    min-width: 160px;
+    width: 70%;
     padding: 10px 14px;
     border-radius: 6px;
     background-color: #000;
     color: #FFF;
+    position: fixed;
+    margin: 0 15%;
+    /*top: 60px;*/
+    left: 0px;
+}
+.keyword-desc-popup {
     position: absolute;
-    bottom: 60px;
-    background: #000;
+    display: none;
+    width: 80%;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background-color: #000;
+    color: #FFF;
+    margin: 0 10%;
+    z-index: 10000;
+    left: 0px;
 }
 #main-stuff .btn-floating {
     width: 42px;
@@ -330,4 +342,7 @@ table.striped > tbody > tr:nth-child(2n+1) {
     -ms-transform: rotate(90deg); /* IE 9 */
     -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
     transform: rotate(90deg);
+}
+.modal {
+    margin: 0 10%;
 }

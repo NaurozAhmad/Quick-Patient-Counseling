@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 , target-densitydpi=device-dpi-->
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <link rel="stylesheet" type="text/css" href="assets/jquery-mobile/jquery.mobile-1.4.5.css">
     <link rel="stylesheet" type="text/css" href="assets/jquery-theme/no-shadow.css">
     <link rel="stylesheet" type="text/css" href="assets/materialize/css/materialize.min.css">
@@ -58,7 +58,7 @@
 
         <div id="div-search-result" style="display:none">
             <ul class="collection" id="main-search-result">
-
+                
             </ul>
         </div>
     </div>
@@ -176,31 +176,7 @@
 
     <!-- =================================================== Result ======================================= -->
 
-    <div data-role="page" id="result-page" style="display: none">
-        <nav>
-            <div class="search-options">
-                <a id="results-to-drugs" class="search-back waves-effect waves-light btn btn-left">
-                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
-                    Back
-                </a>
-            </div>
-            <div class="nav-wrapper search-wrapper">
-                <form>
-                    <div class="input-field">
-                        <input onchange="searchSecond()" class="search search-key" id="search-key" type="search" autofocus data-role="none">
-                        <label for="search"><i class="mdi-action-search"></i></label>
-                        <span class="search-reset" id="second-search-reset">Clear</span>
-                    </div>
-                </form>
-            </div>
-        </nav>
-        
-        <div>
-            <ul class="collection" id="search-result">
-
-            </ul>
-        </div>
-    </div>
+    
 
     <!-- =================================================== Single Drug ======================================= -->
 
@@ -237,7 +213,41 @@
             </ul>
             <div class="container">
                 <h5 class="drug-heading">Key Counseling Points</h5>
+                <div class="keyword-desc-popup"></div>
                 <ul id="keywords">
+                    <li class="popup-trigger">BLah Blah
+                        <span class="popup">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                        <div class="overlay">
+                            
+                        </div>
+                    </li>
+                    <li class="popup-trigger">BLah Blah
+                        <span class="popup">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                        <div class="overlay">
+                            
+                        </div>
+                    </li>
+                    <li class="popup-trigger">BLah Blah
+                        <span class="popup">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                        <div class="overlay">
+                            
+                        </div>
+                    </li>
                 </ul>
                 <p id="s-key-points">
 
@@ -267,7 +277,7 @@
         </div>
         <div class="modal-footer" style="padding: 0 6px;">
             <a href="#!" id="notes-save" class=" modal-action waves-effect waves-green btn-flat">Save</a>
-            <a href="#!" id="notes-cancel" class=" modal-action modal-close waves-effect waves-green btn-flat left">Cancel</a>
+            <a href="#!" id="notes-cancel" class=" modal-action waves-effect waves-green btn-flat left">Cancel</a>
         </div>
     </div>
 
@@ -290,3 +300,28 @@
     <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
+<!-- <div data-role="page" id="result-page" style="display: none">
+        <nav>
+            <div class="search-options">
+                <a id="results-to-drugs" class="search-back waves-effect waves-light btn btn-left">
+                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                    Back
+                </a>
+            </div>
+            <div class="nav-wrapper search-wrapper">
+                <form>
+                    <div class="input-field">
+                        <input onchange="searchSecond()" class="search search-key" id="search-key" type="search" autofocus data-role="none">
+                        <label for="search"><i class="mdi-action-search"></i></label>
+                        <span class="search-reset" id="second-search-reset">Clear</span>
+                    </div>
+                </form>
+            </div>
+        </nav>
+        
+        <div>
+            <ul class="collection" id="search-result">
+    
+            </ul>
+        </div>
+    </div> -->

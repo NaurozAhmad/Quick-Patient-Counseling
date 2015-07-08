@@ -16,7 +16,8 @@ var logOb = null,
     sSearch = $('#search-key'),
     nextBatch = 150,
     done = 0,
-    whichSearch = 1;
+    whichSearch = 1,
+    notesValue = "";
 
 function findByID(id) {
     var deferred = $.Deferred(),
@@ -271,12 +272,10 @@ $('#drugs-to-home').on('click', function(e) {
 $('#drugs-to-results').on('click', function(e) {
     $('body').css('background-color', '#e3dedb');
     $('#all-drugs-page').css('display', 'none');
-    $('#result-page').css('display', 'block');
-    sSearch.focus();
-    sSearch.val('');
-    $('#search-result').empty();
-    whichSearch = 2;
-    window.scrollTo(0,0);
+    homeSearchView();
+    $('#home-page').css('display', 'block');
+    pSearch.focus();
+    whichSearch = 1;
 });
 $('#about-to-home').on('click', function(e) {
     $('body').css('background-color', '#e3dedb');
@@ -284,13 +283,6 @@ $('#about-to-home').on('click', function(e) {
     $('#home-page').css('display', 'block');
     pSearch.focus();
     whichSearch = 1;
-    window.scrollTo(0,0);
-});
-$('#results-to-drugs').on('click', function(e) {
-    $('#result-page').css('display', 'none');
-    $('#all-drugs-page').css('display', 'block');
-    sSearch.val('');
-    whichSearch = 0;
     window.scrollTo(0,0);
 });
 $('#single-to-back').on('click', function(e) {
@@ -306,23 +298,15 @@ $('#single-to-back').on('click', function(e) {
         pSearch.focus();
         window.scrollTo(0,0);
     }
-    if (whichSearch === 2) {
-        $('body').css('background-color', '#e3dedb');
-        $('#drug-page').css('display', 'none');
-        $('#result-page').css('display', 'block');
-        sSearch.focus();
-        window.scrollTo(0,0);
-        startSearch();
-    }
 });
 $('#single-to-search').on('click', function(e) {
     sSearch.val('');
     $('#search-result').empty();
     $('body').css('background-color', '#e3dedb');
     $('#drug-page').css('display', 'none');
-    $('#result-page').css('display', 'block');
-    sSearch.focus();
-    whichSearch = 2;
+    $('#home-page').css('display', 'block');
+    homeSearchView();
+    whichSearch = 1;
     window.scrollTo(0,0);
 });
 
@@ -420,18 +404,20 @@ function onSingleDrug(id) {
                     singleUserNote = userNotesObj[i];
                     if (singleUserNote.note !== "") {
                         $('#s-notes').text(singleUserNote.note);
-                        $('#notes').val(singleUserNote.note);
+                        notesValue = singleUserNote.note;
                         $('.note-new').css('display', 'none');
-                        $('.note-edit').css('display', 'block');
+                        $('.note-edit').css('display', 'inline-block');
                     } else {
+                        notesValue = "";
                         $('#s-notes').text("No notes yet.");
-                        $('.note-new').css('display', 'block');
+                        $('.note-new').css('display', 'inline-block');
                         $('.note-edit').css('display', 'none');
                     }
                     break;
                 } else {
                     $('#s-notes').text('No notes yet.');
-                    $('.note-new').css('display', 'block');
+                    notesValue = "";
+                    $('.note-new').css('display', 'inline-block');
                     $('.note-edit').css('display', 'none');
                 }
             }
@@ -477,31 +463,26 @@ function onBackKey(event) {
             $('#home-page').css('display', 'block');
             pSearch.focus();
             whichSearch = 1;
-            resetPrimarySearch();
             window.scrollTo(0,0);
         }
         else if ($('#home-page').css('display') == "block") {
-            backPressed = 1 + backPressed;
-            if (backPressed === 2) {
-                navigator.app.exitApp();
-                backPressed = 0;
-            } else {
-                Materialize.toast('Press back again to exit.', 2000);
-                setTimeout(function () {
+            if(!$('#search-nav').hasClass('main-search')) {
+                resetPrimarySearch();
+            }
+            else {
+                backPressed = 1 + backPressed;
+                if (backPressed === 2) {
+                    navigator.app.exitApp();
                     backPressed = 0;
-                }, 2000);
+                } else {
+                    Materialize.toast('Press back again to exit.', 2000);
+                    setTimeout(function () {
+                        backPressed = 0;
+                    }, 2000);
+                }
             }
         }
         $('#drug-page').css('display', 'none');
-    }
-    else if (whichSearch === 2) {
-        $('body').css('background-color', '#FFF');
-        $('#result-page').css('display', 'none');
-        $('#all-drugs-page').css('display', 'block');
-        sSearch.val('');
-        whichSearch = 0;
-        $('#drug-page').css('display', 'none');
-        window.scrollTo(0,0);
     }
 }
 
@@ -558,11 +539,13 @@ $('#notes-save').on('touchend', function () {
     }
     if (notes !== "") {
         $('#s-notes').text(notes);
+        notesValue = notes;
         $('.note-new').css('display', 'none');
-        $('.note-edit').css('display', 'block');
+        $('.note-edit').css('display', 'inline-block');
     } else {
         $('#s-notes').text('No notes yet.');
-        $('.note-new').css('display', 'block');
+        notesValue = "";
+        $('.note-new').css('display', 'inline-block');
         $('.note-edit').css('display', 'none');
     }
 
@@ -570,20 +553,33 @@ $('#notes-save').on('touchend', function () {
 
 $('#notes-cancel').on('touchend', function () {
     $('#notes').val('');
+    $('#notes-modal').closeModal();
 });
 
 $(document).on('touchstart', '.overlay', function (event) {
     event.preventDefault();
-    $(this).siblings('.popup').css('display', 'inline-block');
+    var offset = $(this).offset();
+    var parentTop = offset.top;
+    
+    var theText = $(this).siblings('.popup').text();
+    $('.keyword-desc-popup').css('display', 'inline-block');
+    $('.keyword-desc-popup').text(theText);
+    var thisHeight = $('.keyword-desc-popup').css('height');
+    thisHeight = thisHeight.replace('px', '');
+    
+    var offsetTop = parentTop - thisHeight - 30;
+    
+    $('.keyword-desc-popup').offset({top: offsetTop});
 });
 
 $(document).on('touchend', '.overlay', function (event) {
     event.preventDefault();
-    $(this).siblings('.popup').css('display', 'none');
+    $('.keyword-desc-popup').css('display', 'none');
 });
 
 $('.add-notes').on('click', function () {
     $('#notes-modal').openModal();
+    $('#notes').val(notesValue);
     $('#notes').focus();
 });
 
@@ -702,6 +698,17 @@ function resetPrimarySearch() {
     $('#search-nav').addClass('main-search');
     $('#div-search-result').css('display', 'none');
     pSearch.val("");
+    pSearch.focus();
+    window.scrollTo(0,0);
+}
+
+function homeSearchView() {
+    $('#main-search-options').css('display', 'block');
+    $('#main-stuff').css('display', 'none');
+    $('#search-nav').removeClass('main-search');
+    $('#div-search-result').css('display', 'block');
+    pSearch.val("");
+    $('#main-search-result').empty();
     pSearch.focus();
     window.scrollTo(0,0);
 }
