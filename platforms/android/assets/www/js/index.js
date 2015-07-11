@@ -265,8 +265,8 @@ $('#drugs-to-home').on('click', function(e) {
     $('#all-drugs-page').css('display', 'none');
     $('#home-page').css('display', 'block');
     pSearch.focus();
-    resetPrimarySearch();
     whichSearch = 1;
+    resetPrimarySearch();
     window.scrollTo(0,0);
 });
 $('#drugs-to-results').on('click', function(e) {
@@ -285,13 +285,6 @@ $('#about-to-home').on('click', function(e) {
     whichSearch = 1;
     window.scrollTo(0,0);
 });
-/*$('#results-to-drugs').on('click', function(e) {
-    $('#result-page').css('display', 'none');
-    $('#home-page').css('display', 'block');
-    sSearch.val('');
-    whichSearch = 0;
-    window.scrollTo(0,0);
-});*/
 $('#single-to-back').on('click', function(e) {
     if (whichSearch === 0) {
         $('#drug-page').css('display', 'none');
@@ -305,14 +298,6 @@ $('#single-to-back').on('click', function(e) {
         pSearch.focus();
         window.scrollTo(0,0);
     }
-    /*if (whichSearch === 2) {
-        $('body').css('background-color', '#e3dedb');
-        $('#drug-page').css('display', 'none');
-        $('#result-page').css('display', 'block');
-        sSearch.focus();
-        window.scrollTo(0,0);
-        startSearch();
-    }*/
 });
 $('#single-to-search').on('click', function(e) {
     sSearch.val('');
@@ -325,91 +310,6 @@ $('#single-to-search').on('click', function(e) {
     window.scrollTo(0,0);
 });
 
-/*$('#info-update').on('click', function(e) {
-    $('#home-page').css('display', 'none');
-    $('#about-page').css('display', 'block');
-    resetPrimarySearch();
-    whichSearch = 0;
-    window.scrollTo(0,0);
-});
-$('#browse').on('click', function(e) {
-    nextBatch = 150;
-    done = 0;
-    putDrugs();
-    $('body').css('background-color', '#FFF');
-    $('#home-page').css('display', 'none');
-    $('#all-drugs-page').css('display', 'block');
-    resetPrimarySearch();
-    whichSearch = 0;
-    window.scrollTo(0,0);
-});
-$('#drugs-to-home').on('click', function(e) {
-    $('body').css('background-color', '#e3dedb');
-    $('#all-drugs-page').css('display', 'none');
-    $('#home-page').css('display', 'block');
-    pSearch.focus();
-    whichSearch = 1;
-    resetPrimarySearch();
-    window.scrollTo(0,0);
-});
-$('#drugs-to-results').on('click', function(e) {
-    $('body').css('background-color', '#e3dedb');
-    $('#all-drugs-page').css('display', 'none');
-    $('#result-page').css('display', 'block');
-    sSearch.focus();
-    sSearch.val('');
-    $('#search-result').empty();
-    whichSearch = 2;
-    window.scrollTo(0,0);
-});
-$('#about-to-home').on('click', function(e) {
-    $('body').css('background-color', '#e3dedb');
-    $('#about-page').css('display', 'none');
-    $('#home-page').css('display', 'block');
-    pSearch.focus();
-    whichSearch = 1;
-    window.scrollTo(0,0);
-});
-$('#results-to-drugs').on('click', function(e) {
-    $('#result-page').css('display', 'none');
-    $('#home-page').css('display', 'block');
-    sSearch.val('');
-    whichSearch = 0;
-    window.scrollTo(0,0);
-});
-$('#single-to-back').on('click', function(e) {
-    if (whichSearch === 0) {
-        $('#drug-page').css('display', 'none');
-        $('#all-drugs-page').css('display', 'block');
-        window.scrollTo(0,0);
-    }
-    if (whichSearch === 1) {
-        $('body').css('background-color', '#e3dedb');
-        $('#drug-page').css('display', 'none');
-        $('#home-page').css('display', 'block');
-        pSearch.focus();
-        window.scrollTo(0,0);
-    }
-    if (whichSearch === 2) {
-        $('body').css('background-color', '#e3dedb');
-        $('#drug-page').css('display', 'none');
-        $('#result-page').css('display', 'block');
-        sSearch.focus();
-        window.scrollTo(0,0);
-        startSearch();
-    }
-});
-$('#single-to-search').on('click', function(e) {
-    sSearch.val('');
-    $('#search-result').empty();
-    $('body').css('background-color', '#e3dedb');
-    $('#drug-page').css('display', 'none');
-    $('#result-page').css('display', 'block');
-    sSearch.focus();
-    whichSearch = 2;
-    window.scrollTo(0,0);
-});
-*/
 //==================================================== UPDATE LOCAL FILES
 
 function writeStuff(str) {
@@ -435,7 +335,7 @@ function update() {
         writeStuff(stuff);
         readFile();
         $('#update-comp-modal').openModal();
-        $('#update-message').text('Refresh local files.');
+        $('#update-message').text('Load local database.');
         $('#reload-local').css('display', 'block')
         $('.loading').css('display', 'none');
     }).fail(function () {
@@ -451,20 +351,27 @@ $('#update-local').on('touchend', function (event) {
 });
 
 $('#reload-local').on('touchend', function (event) {
-    $('#update-message').text('Refresh key idexes.');
+    $('#update-message').text('Load Key Indexes of all drugs.');
     readFile();
     showAllKeywords();
     $('#reload-local').css('display', 'none');
     $('#reload-index').css('display', 'block');
 });
 $('#reload-index').on('touchend', function (event) {
-    $('#update-message').text('');
+    $('#update-message').text('Updated successfully.');
     readFile();
     showAllKeywords();
     $('#reload-index').css('display', 'none');
     $('#reload-local').css('display', 'none');
-    $('#update-comp-modal').closeModal();
+    $('#finish-update').css('display', 'block');
 });
+$('#finish-update').on('touchend', function (event) {
+    $('#update-message').text('');
+    $('#reload-index').css('display', 'none');
+    $('#reload-local').css('display', 'none');
+    $('#finish-update').css('display', 'none');
+    $('#update-comp-modal').closeModal();
+})
 //==========================================when open a single drug details page.===================================
 function onSingleDrug(id) {
     var jsonStuff = null;
@@ -563,7 +470,6 @@ function onBackKey(event) {
             $('#home-page').css('display', 'block');
             pSearch.focus();
             whichSearch = 1;
-            /*resetPrimarySearch();*/
             window.scrollTo(0,0);
         }
         else if ($('#home-page').css('display') == "block") {
@@ -585,15 +491,6 @@ function onBackKey(event) {
         }
         $('#drug-page').css('display', 'none');
     }
-    /*else if (whichSearch === 2) {
-        $('body').css('background-color', '#FFF');
-        $('#result-page').css('display', 'none');
-        $('#all-drugs-page').css('display', 'block');
-        sSearch.val('');
-        whichSearch = 0;
-        $('#drug-page').css('display', 'none');
-        window.scrollTo(0,0);
-    }*/
 }
 
 document.addEventListener("backbutton", onBackKey, false);
@@ -690,6 +587,7 @@ $(document).on('touchend', '.overlay', function (event) {
 $('.add-notes').on('click', function () {
     $('#notes-modal').openModal();
     $('#notes').val(notesValue);
+    
     $('#notes').focus();
 });
 

@@ -335,7 +335,7 @@ function update() {
         writeStuff(stuff);
         readFile();
         $('#update-comp-modal').openModal();
-        $('#update-message').text('Refresh local files.');
+        $('#update-message').text('Load local database.');
         $('#reload-local').css('display', 'block')
         $('.loading').css('display', 'none');
     }).fail(function () {
@@ -351,20 +351,27 @@ $('#update-local').on('touchend', function (event) {
 });
 
 $('#reload-local').on('touchend', function (event) {
-    $('#update-message').text('Refresh key idexes.');
+    $('#update-message').text('Load Key Indexes of all drugs.');
     readFile();
     showAllKeywords();
     $('#reload-local').css('display', 'none');
     $('#reload-index').css('display', 'block');
 });
 $('#reload-index').on('touchend', function (event) {
-    $('#update-message').text('');
+    $('#update-message').text('Updated successfully.');
     readFile();
     showAllKeywords();
     $('#reload-index').css('display', 'none');
     $('#reload-local').css('display', 'none');
-    $('#update-comp-modal').closeModal();
+    $('#finish-update').css('display', 'block');
 });
+$('#finish-update').on('touchend', function (event) {
+    $('#update-message').text('');
+    $('#reload-index').css('display', 'none');
+    $('#reload-local').css('display', 'none');
+    $('#finish-update').css('display', 'none');
+    $('#update-comp-modal').closeModal();
+})
 //==========================================when open a single drug details page.===================================
 function onSingleDrug(id) {
     var jsonStuff = null;
@@ -580,6 +587,7 @@ $(document).on('touchend', '.overlay', function (event) {
 $('.add-notes').on('click', function () {
     $('#notes-modal').openModal();
     $('#notes').val(notesValue);
+    
     $('#notes').focus();
 });
 
