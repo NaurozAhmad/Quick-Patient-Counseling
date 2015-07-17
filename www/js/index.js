@@ -164,7 +164,7 @@ function readFile() {
                 $('#all-drugs-list').append('<li>No drugs yet. Please update.</li>');
                 $('.drugsNext').css('display', 'none');
                 $('.drugsPrev').css('display', 'none');
-
+                $('#first-update-modal').openModal();
             } else {
                 obj = JSON.parse(string);
                 roughObj = JSON.parse(string);
@@ -243,6 +243,13 @@ $(document).ready(function () {
 //==================================== Custom Redirects ========================
 
 $('#info-update').on('click', function(e) {
+    $('#home-page').css('display', 'none');
+    $('#about-page').css('display', 'block');
+    resetPrimarySearch();
+    whichSearch = 0;
+    window.scrollTo(0,0);
+});
+$('#first-update').on('click', function(e) {
     $('#home-page').css('display', 'none');
     $('#about-page').css('display', 'block');
     resetPrimarySearch();
@@ -335,8 +342,10 @@ function update() {
         writeStuff(stuff);
         readFile();
         $('#update-comp-modal').openModal();
+        $('#reload-local').css('display', 'block');
+        $('#reload-index').css('display', 'none');
+        $('#finish-update').css('display', 'none');
         $('#update-message').text('Load local database.');
-        $('#reload-local').css('display', 'block')
         $('.loading').css('display', 'none');
     }).fail(function () {
         alert("Failed to connect to server. Please check your connection.");

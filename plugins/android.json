@@ -37,13 +37,13 @@
     },
     "installed_plugins": {
         "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.phonegap.drugstore"
+            "PACKAGE_NAME": "com.senhoit.drugstore"
         },
         "cordova-plugin-file-transfer": {
-            "PACKAGE_NAME": "com.phonegap.drugstore"
+            "PACKAGE_NAME": "com.senhoit.drugstore"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.phonegap.drugstore"
+            "PACKAGE_NAME": "com.senhoit.drugstore"
         }
     },
     "dependent_plugins": {}
