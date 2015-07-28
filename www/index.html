@@ -36,27 +36,29 @@
                 </div>
             </div>
         </div>
-        <nav class="main-search" id="search-nav">
-            <div style="display: none" class="search-options" id="main-search-options">
-                <a id="main-back" class="search-back waves-effect waves-light btn btn-left">
-                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
-                    Back
-                </a>
-            </div>
-            <div class="nav-wrapper search-wrapper">
-                <form>
-                    <div class="input-field">
-                        <input onchange="searchMain()" data-role="none" class="search search-key" id="main-search" autofocus type="search">
-                        <label for="search">
-                            <i style="display: inline-block" class="mdi-action-search"></i>
-                        </label>
-                        <span class="search-reset" id="main-search-reset">Clear</span>
-                    </div>
-                </form>
-            </div>
-        </nav>
+        <div id="navbar-fixer">
+            <nav class="main-search" id="search-nav">
+                <div style="display: none" class="search-options" id="main-search-options">
+                    <a id="main-back" class="search-back waves-effect waves-light btn btn-left">
+                        <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                        Back
+                    </a>
+                </div>
+                <div class="nav-wrapper search-wrapper">
+                    <form>
+                        <div class="input-field">
+                            <input onchange="searchMain()" data-role="none" class="search search-key" id="main-search" autofocus type="search">
+                            <label for="search">
+                                <i style="display: inline-block" class="mdi-action-search"></i>
+                            </label>
+                            <span class="search-reset" id="main-search-reset">Clear</span>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
 
-        <div id="div-search-result" style="display:none">
+        <div id="div-search-result" style="display:none; margin-top: 105px;">
             <ul class="collection" id="main-search-result">
                 
             </ul>
@@ -66,18 +68,20 @@
     <!-- =================================================== All Drugs ======================================= -->
 
     <div data-role="page" id="all-drugs-page" style="display: none;">
-        <nav class="nav-bar">
-            <div class="nav-wrapper" style="height: 44px;">
-                <a id="drugs-to-home" class="back-to-main waves-effect waves-light btn btn-left">
-                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
-                    Main
-                </a>
-                <a id="drugs-to-results" class="goto-second-search waves-effect waves-light btn btn-right">
-                    <i class="result-nav-btn left mdi-action-search"></i>
-                    Search
-                </a>
-            </div>
-        </nav>
+        <div class="navbar-fixed">
+            <nav class="nav-bar">
+                <div class="nav-wrapper" style="height: 44px;">
+                    <a id="drugs-to-home" class="back-to-main waves-effect waves-light btn btn-left">
+                        <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                        Main
+                    </a>
+                    <a id="drugs-to-results" class="goto-second-search waves-effect waves-light btn btn-right">
+                        <i class="result-nav-btn left mdi-action-search"></i>
+                        Search
+                    </a>
+                </div>
+            </nav>
+        </div>
         <div class="drugs-nav" align="center">
             <a style="margin-left: 4px" href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
                 <i class="mdi-navigation-chevron-left"></i>
@@ -108,14 +112,16 @@
     <!-- =================================================== About ======================================= -->
 
     <div data-role="page" id="about-page" style="display: none">
-        <nav class="nav-bar">
-            <div class="nav-wrapper" style="height: 44px;">
-                <a id="about-to-home" class="back-to-main back waves-effect waves-light btn btn-left">
-                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
-                    Back
-                </a>
-            </div>
-        </nav>
+        <div class="navbar-fixed">
+            <nav class="nav-bar">
+                <div class="nav-wrapper" style="height: 44px;">
+                    <a id="about-to-home" class="back-to-main back waves-effect waves-light btn btn-left">
+                        <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                        Back
+                    </a>
+                </div>
+            </nav>
+        </div>
         <div class="container">
             <h3 class="logo-heading">Quick Patient Counseling</h3>
             <div class="loading" style="width:100%; display: none;" align="center">
@@ -133,10 +139,10 @@
             <h5>
                 How to use
             </h5>
-            <h6>Updating</h6>
+            <h6 style="font-weight: bold;">Updating</h6>
             Updating is a 2 to 3 step process depending on the difference between local files and the server.
             Press the update button in 'About' page. The process will guide you through the updation. Press finish in the end to complete updation.
-            <h6>Main Page</h6>
+            <h6 style="font-weight: bold;">Main Page</h6>
             Contains the main search bar and two links to 'all drugs' and 'information/help'.
             <ol>
                 <li>Start the search by typing into the search bar.</li>
@@ -145,13 +151,13 @@
                 <li>Press 'clear' to clear the search bar.</li>
                 <li>Press 'back' to go to the main page.</li>
             </ol>
-            <h6>All Drugs</h6>
+            <h6 style="font-weight: bold;">All Drugs</h6>
             <ol>
                 <li>Shows list of all drugs.</li>
                 <li>Each page shows 50 drugs.</li>
                 <li>Link to search and back to the main page.</li>
             </ol>
-            <h6>Single Drug Details</h6>
+            <h6 style="font-weight: bold;">Single Drug Details</h6>
             <ol>
                 <li>Shows details of a single drug.</li>
                 <li>Tap and hold Keywords to see their description.</li>
@@ -168,7 +174,7 @@
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-            <div class="container" style="padding-bottom: 20px;">
+            <div class="" style="padding-bottom: 20px;">
                 <table id="keywords-table" class="striped">
                     <thead style="font-weight: bold">
                     </thead>
@@ -184,18 +190,20 @@
     <!-- =================================================== Single Drug ======================================= -->
 
     <div data-role="page" id="drug-page" style="display: none">
-        <nav class="nav-bar">
-            <div class="nav-wrapper" style="height: 44px;">
-                <a id="single-to-back" class="back waves-effect waves-light btn btn-left">
-                    <i class="result-nav-btn left mdi-image-navigate-before"></i> 
-                    Back
-                </a>
-                <a id="single-to-search" class="goto-second-search waves-effect waves-light btn btn-right" id="drug-page-search">
-                    <i class="result-nav-btn left mdi-action-search"></i>
-                    Search
-                </a>
-            </div>
-        </nav>
+        <div class="navbar-fixed">
+            <nav class="nav-bar">
+                <div class="nav-wrapper" style="height: 44px;">
+                    <a id="single-to-back" class="back waves-effect waves-light btn btn-left">
+                        <i class="result-nav-btn left mdi-image-navigate-before"></i> 
+                        Back
+                    </a>
+                    <a id="single-to-search" class="goto-second-search waves-effect waves-light btn btn-right" id="drug-page-search">
+                        <i class="result-nav-btn left mdi-action-search"></i>
+                        Search
+                    </a>
+                </div>
+            </nav>
+        </div>
 
         <div>
 
@@ -240,7 +248,7 @@
     
     <div id="first-update-modal" class="modal">
         <div class="modal-content" style="padding-bottom: 4px; padding-top: 4px;">
-            <h5 id="modal-heading" style="margin-top: 6px">Update local database for the first time.</h5>
+            <h6 id="modal-heading" style="margin-top: 6px">Update local database for the first time.</h6>
             <div class="input-field">
             </div>
         </div>

@@ -153,6 +153,7 @@ function fail(e) {
     console.dir(e);
 }
 
+var shown = false;
 function readFile() {
     logOb.file(function (file) {
         var reader = new FileReader();
@@ -164,7 +165,10 @@ function readFile() {
                 $('#all-drugs-list').append('<li>No drugs yet. Please update.</li>');
                 $('.drugsNext').css('display', 'none');
                 $('.drugsPrev').css('display', 'none');
-                $('#first-update-modal').openModal();
+                if (!shown) {
+                    $('#first-update-modal').openModal();
+                    shown = true;
+                }
             } else {
                 obj = JSON.parse(string);
                 roughObj = JSON.parse(string);
@@ -345,7 +349,7 @@ function update() {
         $('#reload-local').css('display', 'block');
         $('#reload-index').css('display', 'none');
         $('#finish-update').css('display', 'none');
-        $('#update-message').text('Load local database.');
+        $('#update-message').text('Import local database.');
         $('.loading').css('display', 'none');
     }).fail(function () {
         alert("Failed to connect to server. Please check your connection.");
@@ -360,7 +364,7 @@ $('#update-local').on('touchend', function (event) {
 });
 
 $('#reload-local').on('touchend', function (event) {
-    $('#update-message').text('Load Key Indexes of all drugs.');
+    $('#update-message').text('Import Key Indexes.');
     readFile();
     showAllKeywords();
     $('#reload-local').css('display', 'none');
@@ -680,9 +684,9 @@ sSearch.on('input', function () {
 
 $('#main-search-reset').on('click', function(e) {
     pSearch.val('');
-    pSearch.focus();
     $('#main-search-result').empty();
     $('#search-result').empty();
+    pSearch.focus();
     window.scrollTo(0,0);
 });
 
@@ -703,6 +707,7 @@ function startMainSearch() {
         $('#main-stuff').css('display', 'none');
         $('#main-search-options').css('display', 'block');
         $('#search-nav').removeClass('main-search');
+        $('#navbar-fixer').addClass('nav-fixed');
         $('#div-search-result').css('display', 'block');
         window.scrollTo(0,0);
         doUnifiedSearch(typed, "#main-search-result");
@@ -713,6 +718,7 @@ function resetPrimarySearch() {
     $('#main-search-options').css('display', 'none');
     $('#main-stuff').css('display', 'block');
     $('#search-nav').addClass('main-search');
+    $('#navbar-fixer').removeClass('nav-fixed');
     $('#div-search-result').css('display', 'none');
     pSearch.val("");
     pSearch.focus();
