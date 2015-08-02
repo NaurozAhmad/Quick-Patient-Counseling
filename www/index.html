@@ -68,7 +68,7 @@
     <!-- =================================================== All Drugs ======================================= -->
 
     <div data-role="page" id="all-drugs-page" style="display: none;">
-        <div class="navbar-fixed">
+        <div class="nav-normal-fixed">
             <nav class="nav-bar">
                 <div class="nav-wrapper" style="height: 44px;">
                     <a id="drugs-to-home" class="back-to-main waves-effect waves-light btn btn-left">
@@ -82,37 +82,39 @@
                 </div>
             </nav>
         </div>
-        <div class="drugs-nav" align="center">
-            <a style="margin-left: 4px" href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
-                <i class="mdi-navigation-chevron-left"></i>
-                <!-- <img class="icon-img" style="arrow-back" style="transform: rotate(180deg);" src="img/arrow.png"> -->
-            </a>
-            <span class="current-drugs"></span>
-            <a href="#" class="btn-floating waves-effect waves-light drugsNext btn-right">
-                <i class="mdi-navigation-chevron-right"></i>
-                <!-- <img class="icon-img" src="img/arrow.png"> -->
-            </a>
-        </div>
-        <div>
-            <ul class="collection" id="all-drugs-list">
-
-            </ul>
-        </div>
-        <div class="drugs-nav" align="center">
-            <a style="margin-left: 4px" href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
-                <i class="mdi-navigation-chevron-left"></i>
-            </a>
-            <span class="current-drugs"></span>
-            <a href="#" class="btn-floating waves-effect waves-light drugsNext btn-right">
-                <i class="mdi-navigation-chevron-right"></i>
-            </a>
+        <div style="margin-top:55px;">
+            <div class="drugs-nav" align="center">
+                <a style="margin-left: 4px" href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
+                    <i class="mdi-navigation-chevron-left"></i>
+                    <!-- <img class="icon-img" style="arrow-back" style="transform: rotate(180deg);" src="img/arrow.png"> -->
+                </a>
+                <span class="current-drugs"></span>
+                <a href="#" class="btn-floating waves-effect waves-light drugsNext btn-right">
+                    <i class="mdi-navigation-chevron-right"></i>
+                    <!-- <img class="icon-img" src="img/arrow.png"> -->
+                </a>
+            </div>
+            <div>
+                <ul class="collection" id="all-drugs-list">
+            
+                </ul>
+            </div>
+            <div class="drugs-nav" align="center">
+                <a style="margin-left: 4px" href="#" class="btn-floating waves-effect waves-light drugsPrev btn-left disabled">
+                    <i class="mdi-navigation-chevron-left"></i>
+                </a>
+                <span class="current-drugs"></span>
+                <a href="#" class="btn-floating waves-effect waves-light drugsNext btn-right">
+                    <i class="mdi-navigation-chevron-right"></i>
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- =================================================== About ======================================= -->
 
     <div data-role="page" id="about-page" style="display: none">
-        <div class="navbar-fixed">
+        <div class="nav-normal-fixed">
             <nav class="nav-bar">
                 <div class="nav-wrapper" style="height: 44px;">
                     <a id="about-to-home" class="back-to-main back waves-effect waves-light btn btn-left">
@@ -122,7 +124,7 @@
                 </div>
             </nav>
         </div>
-        <div class="container">
+        <div class="container" style="padding-top:55px;">
             <h3 class="logo-heading">Quick Patient Counseling</h3>
             <div class="loading" style="width:100%; display: none;" align="center">
                 <img style="width: 40px; height: auto;" src="img/loading.GIF">
@@ -173,7 +175,7 @@
             consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+        
             <div class="" style="padding-bottom: 20px;">
                 <table id="keywords-table" class="striped">
                     <thead style="font-weight: bold">
@@ -190,7 +192,7 @@
     <!-- =================================================== Single Drug ======================================= -->
 
     <div data-role="page" id="drug-page" style="display: none">
-        <div class="navbar-fixed">
+        <div class="nav-normal-fixed">
             <nav class="nav-bar">
                 <div class="nav-wrapper" style="height: 44px;">
                     <a id="single-to-back" class="back waves-effect waves-light btn btn-left">
@@ -205,41 +207,42 @@
             </nav>
         </div>
 
-        <div>
-
-            <ul class="collection">
-                <li class="collection-item">
-                    <span style="font-weight: bold; font-size: 1.4rem;">
-                        <span id="s-drug-name" style="text-transform: capitalize"></span>
-                        <input type="hidden" id="s-drug-id">
-                        <span id="s-drug-brand" style="text-transform: capitalize" class="title-name"></span>
-                    </span>
-                </li>
-                <li class="collection-item stripy"><span class="attrib">Food</span><span id="s-food"></span></li>
-                <li class="collection-item"><span class="attrib">Sedation</span><span id="s-sedation"></span></li>
-                <li class="collection-item stripy"><span class="attrib">Preg/Lact</span><span id="s-preg"></span></li>
-                <li class="collection-item"><span class="attrib">Maj.SEs</span><span id="s-maj"></span></li>
-                <li class="collection-item stripy"><span class="attrib">Caution/XI</span><span id="s-caution"></span></li>
-                <li class="collection-item"><span class="attrib">BBW</span><span id="s-bbw"></span></li>
-            </ul>
-            <div class="container">
-                <h5 class="drug-heading">Key Counseling Points</h5>
-                <div class="keyword-desc-popup"></div>
-                <ul id="keywords">
+        <div style="margin-top:55px;">
+            <div>
+                <ul class="collection">
+                    <li class="collection-item">
+                        <span style="font-weight: bold; font-size: 1.4rem;">
+                            <span id="s-drug-name" style="text-transform: capitalize"></span>
+                            <input type="hidden" id="s-drug-id">
+                            <span id="s-drug-brand" style="text-transform: capitalize" class="title-name"></span>
+                        </span>
+                    </li>
+                    <li class="collection-item stripy"><span class="attrib">Food</span><span id="s-food"></span></li>
+                    <li class="collection-item"><span class="attrib">Sedation</span><span id="s-sedation"></span></li>
+                    <li class="collection-item stripy"><span class="attrib">Preg/Lact</span><span id="s-preg"></span></li>
+                    <li class="collection-item"><span class="attrib">Maj.SEs</span><span id="s-maj"></span></li>
+                    <li class="collection-item stripy"><span class="attrib">Caution/XI</span><span id="s-caution"></span></li>
+                    <li class="collection-item"><span class="attrib">BBW</span><span id="s-bbw"></span></li>
                 </ul>
-                <p id="s-key-points">
-
-                </p>
-                <h5 class="drug-heading">User Notes</h5>
-                <p id="s-notes"></p>
-                <a class="add-notes note-new">
-                    <!-- <i class="mdi-content-add"></i> -->
-                    <img class="icon-img" src="img/add-notes.png">
-                </a>
-                <a style="display: none;" class="add-notes note-edit">
-                    <!-- <i class="mdi-editor-mode-edit"></i> -->
-                    <img class="icon-img" src="img/edit-notes.png">
-                </a>
+                <div class="container">
+                    <h5 class="drug-heading">Key Counseling Points</h5>
+                    <div class="keyword-desc-popup"></div>
+                    <ul id="keywords">
+                    </ul>
+                    <p id="s-key-points">
+            
+                    </p>
+                    <h5 class="drug-heading">User Notes</h5>
+                    <p id="s-notes"></p>
+                    <a class="add-notes note-new">
+                        <!-- <i class="mdi-content-add"></i> -->
+                        <img class="icon-img" src="img/add-notes.png">
+                    </a>
+                    <a style="display: none;" class="add-notes note-edit">
+                        <!-- <i class="mdi-editor-mode-edit"></i> -->
+                        <img class="icon-img" src="img/edit-notes.png">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -248,7 +251,7 @@
     
     <div id="first-update-modal" class="modal">
         <div class="modal-content" style="padding-bottom: 4px; padding-top: 4px;">
-            <h6 id="modal-heading" style="margin-top: 6px">Update local database for the first time.</h6>
+            <h6 id="modal-heading" style="margin-top: 6px">Please go to "Info Page" or press "Go To Update" button and press "Update" button in "Info Page" to update local database.</h6>
             <div class="input-field">
             </div>
         </div>

@@ -349,7 +349,16 @@ table.striped > tbody > tr:nth-child(2n+1) {
 .nav-fixed {
     position: fixed;
     top: 0;
+    left: 0;
     z-index: 9000;
     width: 100%;
     height: 110px;
+}
+.nav-normal-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9000;
+    width: 100%;
+    height: 70px;
 }
