@@ -364,7 +364,7 @@ $('#update-local').on('touchend', function (event) {
 });
 
 $('#reload-local').on('touchend', function (event) {
-    $('#update-message').text('Import Key Indexes.');
+    $('#update-message').text('Press Next, to load data.');
     readFile();
     showAllKeywords();
     $('#reload-local').css('display', 'none');
