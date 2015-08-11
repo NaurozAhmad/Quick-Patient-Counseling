@@ -236,6 +236,26 @@ function onDeviceReady() {
     
 }
 
+if ((navigator.userAgent.match(/iPad|iPod|iPad/))) {
+    $('#info-update').css('top', '30px');
+    $('#browse').css('margin-top', '16px');
+    $('.nav-bar').css('padding-top', '14px');
+    $('#search-nav').css('padding-top', '14px');
+    $('.main-search').css('padding-top', '0');
+    $('#div-search-result').css('margin-top', '119px');
+    $('.the-content').css('margin-top', '69px');
+    $('.about-content').css('padding-top', '69px');
+}
+else {
+    $('#info-update').css('top', '12px');
+    $('#browse').css('margin-top', '0');
+    $('.nav-bar').css('padding-top', '0');
+    $('#search-nav').css('padding-top', '0');
+    $('#div-search-result').css('margin-top', '105px');
+    $('.the-content').css('margin-top', '55px');
+    $('.about-content').css('padding-top', '55px');
+}
+
 $(document).ready(function () {
     if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
         document.addEventListener("deviceready", onDeviceReady, false);
