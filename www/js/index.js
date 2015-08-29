@@ -157,7 +157,7 @@ var shown = false;
 function readFile() {
     logOb.file(function (file) {
         var reader = new FileReader();
-
+    
         reader.onloadend = function () {
             var string = this.result;
             if (string == "") {
@@ -174,6 +174,7 @@ function readFile() {
                 roughObj = JSON.parse(string);
                 obj = sortByKey(obj, 'drug_name');
                 putDrugs();
+                showAllKeywords();
             }
         };
         reader.readAsText(file);
@@ -255,7 +256,6 @@ function onDeviceReady() {
     
 }
 
-
 $(document).ready(function () {
     if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -316,6 +316,16 @@ $('#about-to-home').on('click', function(e) {
     whichSearch = 1;
     window.scrollTo(0,0);
 });
+$('#about-to-keywords').on('click', function (e) {
+    $('#about-page').css('display', 'none');
+    $('#keywords-page').css('display', 'block');
+    window.scrollTo(0,0);
+});
+$('#keyword-to-back').on('click', function (e) {
+    $('#keywords-page').css('display', 'none');
+    $('#about-page').css('display', 'block');
+    window.scrollTo(0,0);
+});
 $('#single-to-back').on('click', function(e) {
     if (whichSearch === 0) {
         $('#drug-page').css('display', 'none');
@@ -352,8 +362,10 @@ function writeStuff(str) {
     logOb.createWriter(function (fileWriter) {
         var blob = new Blob([log], {type: 'text/plain'});
         fileWriter.write(blob);
-        if(reloaded === 1) {
+        
+        fileWriter.onwriteend = function (event) {
             Materialize.toast('Local database updated.', 2000);
+            readFile();
         }
     }, fail);
 }
@@ -364,12 +376,7 @@ function update() {
     }).done(function (data) {
         stuff = data;
         writeStuff(stuff);
-        readFile();
         $('#update-comp-modal').openModal();
-        $('#reload-local').css('display', 'block');
-        $('#reload-index').css('display', 'none');
-        $('#finish-update').css('display', 'none');
-        $('#update-message').text('Import local database.');
         $('.loading').css('display', 'none');
     }).fail(function () {
         alert("Failed to connect to server. Please check your connection.");
@@ -382,27 +389,7 @@ $('#update-local').on('touchend', function (event) {
     $('.loading').css('display', 'block');
     update();
 });
-
-$('#reload-local').on('touchend', function (event) {
-    $('#update-message').text('Press Next, to load data.');
-    readFile();
-    showAllKeywords();
-    $('#reload-local').css('display', 'none');
-    $('#reload-index').css('display', 'block');
-});
-$('#reload-index').on('touchend', function (event) {
-    $('#update-message').text('Updated successfully.');
-    readFile();
-    showAllKeywords();
-    $('#reload-index').css('display', 'none');
-    $('#reload-local').css('display', 'none');
-    $('#finish-update').css('display', 'block');
-});
 $('#finish-update').on('touchend', function (event) {
-    $('#update-message').text('');
-    $('#reload-index').css('display', 'none');
-    $('#reload-local').css('display', 'none');
-    $('#finish-update').css('display', 'none');
     $('#update-comp-modal').closeModal();
 })
 //==========================================when open a single drug details page.===================================
@@ -488,6 +475,10 @@ function onBackKey(event) {
             pSearch.focus();
             whichSearch = 1;
             window.scrollTo(0,0);
+        }
+        else if ($('#keywords-page').css('display') == "block") {
+            $('#keywords-page').css("display", "none");
+            $('#about-page').css("display", "block");
         }
         else if ($('#drug-page').css('display') == "block") {
             $('#drug-page').css('display', 'none');
